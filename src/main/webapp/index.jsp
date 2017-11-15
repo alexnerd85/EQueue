@@ -35,7 +35,7 @@
                   dbLogin = $( "#dbLogin" ),
                   dbPassword = $( "#dbPassword" ),
                   adminLogin = $( "#adminLogin" ),
-                  adminPassword = $( "#middlename" ),
+                  adminPassword = $( "#adminPassword" ),
                   allFields = $( [] ).add(dbAdress).add(dbName).add(dbLogin).add(dbPassword).add(adminLogin).add(adminPassword),
                   tips = $( ".validateTips" );
 
@@ -88,7 +88,8 @@
                     valid = valid && checkRegexp( adminPassword, /^([0-9a-zA-Z])+$/, "Допустимые символы для пароля: a-z A-Z 0-9" );
 
                     if ( valid ) {                      
-                        $.post("equeuemain",{action:"add-config",
+                        $.post("equeuemain",{action:"main_action",
+                                        main_action:"add-config",
                                         dbAdress:dbAdress.val(),
                                         dbName:dbName.val(),
                                         dbLogin:dbLogin.val(),
@@ -127,7 +128,8 @@
                 });
 
                 $( "#wizard-form" ).ready( function() {
-                    $.post("equeuemain", {action: "isConfigEmpty"},function(data){
+                    $.post("equeuemain", {action: "main_action",
+                                          main_action:"checkConfig"},function(data){
                         if($.trim(data) === 'true'){
                             dialog.dialog( "open" );
                         }  

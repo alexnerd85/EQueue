@@ -5,6 +5,7 @@
  */
 package com.alexnerd.servlets;
 
+import com.alexnerd.data.Admin;
 import com.alexnerd.data.EQueue;
 import com.alexnerd.listeners.InitEQueueListener;
 import java.io.IOException;
@@ -87,24 +88,7 @@ public class EQueueServlet extends HttpServlet {
         session.setAttribute("user", equeue.getUser(0));
         
         String action = request.getParameter("main_action");
-        
-        String configRequest = request.getParameter("action");
-        System.out.println("**************************************************  " + configRequest);
-        if(configRequest != null){
-            System.out.println("**************************************************  " + configRequest);
-            System.out.println("**************************************************  " + equeue.getProperties().getProperty("dbAdress").isEmpty());
-            if(equeue.getProperties().getProperty("dbAdress").isEmpty()){ 
-                System.out.println("**************************************************  " + equeue.getProperties().getProperty("dbAdress").isEmpty());
-                try (PrintWriter out = response.getWriter()) {
-                    System.out.println("**************************************************  " + equeue.getProperties().getProperty("dbAdress").isEmpty());
-                    out.println("true");
-                    System.out.println("**************************************************  " + equeue.getProperties().getProperty("dbAdress").isEmpty());
-                    out.flush();
-                }                
-            }
-        }
-        
-                
+                    
         /*if(equeue == null){
             equeue = new EQueue();
         }
@@ -131,8 +115,26 @@ public class EQueueServlet extends HttpServlet {
                 case "window":
                     url = "/WEB-PAGES/WINDOW/window.jsp";
                     break;
-                default:
+                case "checkConfig":
+                    if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
+                        try (PrintWriter out = response.getWriter()) {
+                            out.println("true");
+                            out.flush();
+                        }
+                    }
                     break;
+                case "add-config":
+                    
+                    equeue.addUser(new Admin(
+                                request.getParameter("adminLogin"),
+                                request.getParameter("adminPassword"),
+                                "",
+                                "",
+                                ""
+                    ));
+                    break;
+                default:
+                    throw new ServletException("Unknown request");
             }
         }
         
