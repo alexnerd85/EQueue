@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <display-name>EQueue</display-name>
+    <description>Electronic queue management system</description>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    <!-- ServletDefinition -->
+    <!-- EQueueServlet -->
+    <servlet>
+        <servlet-name>EQueueServlet</servlet-name>
+        <servlet-class>com.alexnerd.servlets.EQueueServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EQueueServlet</servlet-name>
+        <url-pattern>/equeuemain</url-pattern>
+    </servlet-mapping>
+    <!-- AdminServlet -->
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.alexnerd.servlets.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <!-- TerminalServlet -->
+    <servlet>
+        <servlet-name>TerminalServlet</servlet-name>
+        <servlet-class>com.alexnerd.servlets.TerminalServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TerminalServlet</servlet-name>
+        <url-pattern>/terminal</url-pattern>
+    </servlet-mapping>
+    <!-- OperatorServlet -->
+    <servlet>
+        <servlet-name>OperatorServlet</servlet-name>
+        <servlet-class>com.alexnerd.servlets.OperatorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OperatorServlet</servlet-name>
+        <url-pattern>/operator</url-pattern>
+    </servlet-mapping>
+    <!-- TableServlet -->
+    <servlet>
+        <servlet-name>TableServlet</servlet-name>
+        <servlet-class>com.alexnerd.servlets.TableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TableServlet</servlet-name>
+        <url-pattern>/table</url-pattern>
+    </servlet-mapping>
+    <!--Error page -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-PAGES/error.jsp</location>
+    </error-page>
+    <!-- Listeners -->
+    <listener>
+        <listener-class>
+            com.alexnerd.listeners.InitEQueueListener
+        </listener-class>
+    </listener>
+</web-app>

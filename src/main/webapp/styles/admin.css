@@ -1,0 +1,149 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04.03.2017, 19:41:53
+    Author     : Popov Aleksey
+*/
+
+body {
+  font: Geneva, Arial, Helvetica, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  
+}
+
+.header, .main{
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+.header{
+   background-color: black;
+}
+
+.main-header{
+    background-color: #66ADCF;
+    color: #044767;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.text-header{
+    background-color: #0D6F9F;
+    font-weight: bold;
+    font-size: 120%;
+    color:  whitesmoke;
+}
+
+.side-nav{
+    background-color: #66ADCF;
+}
+
+.main-content{
+    background-color: white;
+    margin: 10px;
+}
+
+.side-nav ul{
+    list-style: none;
+    font-size: 150%;
+    padding: 0;
+    margin: 0;
+    
+}
+
+.side-nav ul li{
+    padding: 20px 10px;
+    /*color: #fff;*/
+    
+}
+
+.side-nav ul li:hover{
+    background-color: #044767;
+    width: 180px;
+}
+
+.side-nav ul li:focus{
+    color: #FDBF77;
+    background-color: #044767;
+    width: 180px;
+}
+
+.side-nav ul a{
+    color: #044767;
+    text-decoration: none;
+}
+
+.side-nav ul a:hover{
+    color: #FDBF77;    
+}
+
+.side-nav ul a:focus{
+    color: #FDBF77;
+}
+
+/* flexbox code*/
+html {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+body {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.header {   
+  flex: 0 0 50px;
+  display: -webkit-flex;
+  display: flex;
+  /*min-height: 50px;*/
+
+}
+
+.main-header{
+  flex: 0 0 200px;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.text-header{
+    flex: 1 1 360px;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.main {
+  flex: auto;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.side-nav{
+  flex: 0 0 200px;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main-content{
+    min-height: 300px;
+    flex: 1 1 360px;
+    flex-direction: column;
+    display: -webkit-flex;
+    display: flex;
+   /* background-color: yellow;*/
+}
+

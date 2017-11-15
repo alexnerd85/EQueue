@@ -1,0 +1,78 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04.10.2017, 11:58:26
+    Author     : user
+*/
+
+.header, .main, .ticket, .buttons-block, .footer {
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 4px;
+}
+
+.header {
+  width: 100%;
+  font-size: 150%;  
+  /*background-color: #002A92;*/
+}
+
+.main {
+  width: 100%;
+}
+
+.ticket{    
+  /*background-color: #7BA0FF;*/
+      font-size: 1200%;
+      font-weight: bold;
+      color: #1982A5;
+
+}
+
+.buttons-block {
+  /*background-color: #002A92;*/
+}
+
+.header{
+    display:    flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+  flex: auto;
+  display: flex;
+}
+
+.footer {
+  width: 100%;
+  height: 100px;
+  color: #1982A5;
+  
+  /*background-color: #002A92;*/
+}
+
+
+.ticket{    
+  min-height: 300px;
+  flex: 1 1 360px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+
+.buttons-block{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer{
+  display: flex;
+  align-items: flex-end;
+}

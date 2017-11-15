@@ -1,0 +1,80 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04.03.2017, 19:41:53
+    Author     : Popov Aleksey
+*/
+
+html, body{
+	font-family:            Geneva, Arial, Helvetica, sans-serif;
+	background:             linear-gradient(to top, #d6f9ff, #9ee8fa);						
+	height:                 100%;
+        margin:                 0px;
+        padding:                0px;
+}
+
+hr.style{ 
+        border:                   0; 
+        height:                   1px;
+        width:                    80%;
+        background-image:         -webkit-linear-gradient(left, #9ee8fa, #8c8b8b, #9ee8fa);
+        background-image:         -moz-linear-gradient(left, #9ee8fa, #8c8b8b, #9ee8fa);
+        background-image:         -ms-linear-gradient(left, #9ee8fa, #8c8b8b, #9ee8fa);
+        background-image:         -o-linear-gradient(left, #9ee8fa, #8c8b8b, #9ee8fa); 
+}
+
+h1{
+    color:                  #2FE126;
+    font-weight:            bold;
+    font:                   Geneva, Arial, Helvetica, sans-serif; 
+}
+
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: 3vw;
+	color: white;
+	background: none;
+	cursor: pointer;
+	padding: 25px 80px;
+	display: inline-block;
+	margin: 15px 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+        width: 350px;
+        height: 50px;
+        text-align: center;
+	background: #FF7600;
+	color: #fff;
+	box-shadow: 0 6px #c65c00;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+	border-radius: 5px;
+}
+
+.btn-2:active {
+	box-shadow: 0 0 #c65c00;
+	top: 6px;
+}
