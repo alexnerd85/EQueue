@@ -27,6 +27,7 @@
         }
         $.post("admin",{action: "save-user",
                         userId: id,
+                        userRole: role,
                         userSirname: sirname,
                         userName: name,
                         userMiddlename: middlename,

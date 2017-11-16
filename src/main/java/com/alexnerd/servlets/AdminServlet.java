@@ -109,13 +109,20 @@ public class AdminServlet extends HttpServlet {
                 equeue.deleteUser(Long.parseLong(request.getParameter("userId")));
             }  
             if(action.equals("save-user")){
+                System.out.println("***********************************  1  ***************************************");
+                System.out.println("****************************************  " + request.getParameter("userId"));
+                System.out.println("****************************************  " + request.getParameter("userRole"));
                 User user = equeue.getUserByIdAndRole(
                         Long.parseLong(request.getParameter("userId")),
                         UserRole.valueOf(request.getParameter("userRole")));
+                System.out.println("***********************************  2  ***************************************");
                 // Должна быть проверка на null!!! Иначе сервер возвращает 500
-                user.setName(request.getParameter("userName"));
-                user.setSirname(request.getParameter("userSirname"));
-                user.setMiddlename(request.getParameter("userMiddlename"));
+                //return str == null ? true : false;
+                user.setName(equeue.checkNullRequest(request.getParameter("userName")));
+                System.out.println("***********************************  3  ***************************************");
+                System.out.println("************************************  " + equeue.checkNullRequest(request.getParameter("userName")));
+                user.setSirname(equeue.checkNullRequest(request.getParameter("userSirname")));
+                user.setMiddlename(equeue.checkNullRequest(request.getParameter("userMiddlename")));
                 user.setPassword(request.getParameter("userPassword"));
                 if(UserRole.OPERATOR == user.getUserRole()){
                     ((Operator) user).setNumWindow(Integer.valueOf(request.getParameter("userNumWindow")));
