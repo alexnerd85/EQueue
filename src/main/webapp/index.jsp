@@ -80,11 +80,11 @@
                     valid = valid && checkLength( adminLogin, "adminLogin", 3, 16 );
                     valid = valid && checkLength( adminPassword, "adminPassword", 5, 16 );
 
-                    valid = valid && checkRegexp( dbAdress, /^([a-zA-Z])([0-9a-zA-Z_])+$/,"Логин должен начинаться с латинской буквы и может состоять из латинских букв, цифр и нижнего подчеркивания");
-                    valid = valid && checkRegexp( dbName, /^([A-ZА-Я])([a-zа-я])+$/i, "Фамилия пользователя должна состоять только из букв и начинаться с заглавной буквы" );            
-                    valid = valid && checkRegexp( dbLogin, /^([A-ZА-Я])([a-zа-я])+$/i, "Имя пользователя должно состоять только из букв и начинаться с заглавной буквы" );
-                    valid = valid && checkRegexp( dbPassword, /^([A-ZА-Я])([a-zа-я])+$/i, "Отчество пользователя должно состоять только из букв и начинаться с заглавной буквы" );
-                    valid = valid && checkRegexp( adminLogin, /^([0-9a-zA-Z])+$/, "Допустимые символы для пароля: a-z A-Z 0-9" );
+                    valid = valid && checkRegexp( dbAdress, /^([a-zA-Z])([0-9a-zA-Z_])+$/,"Адрес для подключения к базе данных должен начинаться с латинской буквы и может состоять из латинских букв, цифр и нижнего подчеркивания");
+                    valid = valid && checkRegexp( dbName, /^([a-zA-Z0-9])+$/i, "Имя базы данных должно состоять только из букв латинского алфавита и цифрв" );            
+                    valid = valid && checkRegexp( dbLogin, /^([A-Za-z0-9])+$/i, "Логин для подключения к базе данных должен состоять только из букв латинского алфавита и цифр" );
+                    valid = valid && checkRegexp( dbPassword, /^([A-ZА-Яа-яa-z0-9])+$/i, "Пароль может состоять из букв и цифр" );
+                    valid = valid && checkRegexp( adminLogin, /^([0-9a-zа-яА-ЯA-Z])+$/, "Логин для подключения к программе может состоять из букв и цифр" );
                     valid = valid && checkRegexp( adminPassword, /^([0-9a-zA-Z])+$/, "Допустимые символы для пароля: a-z A-Z 0-9" );
 
                     if ( valid ) {                      

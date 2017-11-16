@@ -109,7 +109,10 @@ public class AdminServlet extends HttpServlet {
                 equeue.deleteUser(Long.parseLong(request.getParameter("userId")));
             }  
             if(action.equals("save-user")){
-                User user = equeue.getUserById(Long.parseLong(request.getParameter("userId")));
+                User user = equeue.getUserByIdAndRole(
+                        Long.parseLong(request.getParameter("userId")),
+                        UserRole.valueOf(request.getParameter("userRole")));
+                // Должна быть проверка на null!!! Иначе сервер возвращает 500
                 user.setName(request.getParameter("userName"));
                 user.setSirname(request.getParameter("userSirname"));
                 user.setMiddlename(request.getParameter("userMiddlename"));

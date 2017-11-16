@@ -94,6 +94,15 @@ public class EQueue implements Serializable{
         return null;
     }
     
+    public synchronized User getUserByIdAndRole(long userId, UserRole userRole){        
+        for(User user : users){
+            if(user.getUserId() == userId && user.getUserRole() == userRole){
+                return user;
+            }           
+        }
+        return null;
+    }
+    
     public synchronized boolean deleteUser(User user){
         return users.remove(user);
     }

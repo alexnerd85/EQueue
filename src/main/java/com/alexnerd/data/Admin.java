@@ -6,11 +6,12 @@
 package com.alexnerd.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  *
- * @author Aleksey
+ * @author Popov Aleksey 2017
  */
 public class Admin implements Serializable, User, Available{
     private static final long serialVersionUID = 1L;
@@ -101,6 +102,37 @@ public class Admin implements Serializable, User, Available{
     public boolean isAvailable() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (int) (this.userId ^ (this.userId >>> 32));
+        hash = 67 * hash + Objects.hashCode(this.login);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Admin other = (Admin) obj;
+        if (this.userId != other.userId) {
+            return false;
+        }
+        if (!Objects.equals(this.login, other.login)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
     
 }

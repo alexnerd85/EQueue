@@ -14,7 +14,7 @@ public interface User {
     
     //public void setUserId(int userId);
     public long getUserId();
-    
+      
     public void setLogin(String login);
     public String getLogin();
     

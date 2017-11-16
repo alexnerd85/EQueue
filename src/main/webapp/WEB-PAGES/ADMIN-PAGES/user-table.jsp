@@ -20,7 +20,11 @@
         var name = $(this).closest('tr').find('input[name=name]').val();
         var middlename = $(this).closest('tr').find('input[name=middlename]').val();
         var password = $(this).closest('tr').find('input[name=password]').val();
-        var numWindow = $(this).closest('tr').find('input[name=windowNumber]').val();
+        var role = $(this).closest('tr').find('td[name=userRole]').text();
+        var numWindow='none';
+        if(role === 'OPERATOR'){
+            numWindow = $(this).closest('tr').find('input[name=windowNumber]').val();
+        }
         $.post("admin",{action: "save-user",
                         userId: id,
                         userSirname: sirname,
@@ -44,7 +48,7 @@
     <c:forEach var="user" items="${equeue.users}">
         <tr>
             <td>${user.login}</td>
-            <td>${user.userRole}</td>
+            <td name="userRole">${user.userRole}</td>
             <td>
                 <input name="sirname" size="15" value="<c:out value='${user.sirname}'/>">
             </td>
