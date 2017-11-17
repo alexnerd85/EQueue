@@ -195,9 +195,11 @@ public class EQueue implements Serializable{
         return UserRole.values();
     }
     
+    /*
     public synchronized String checkNullRequest(String str){
         return str == null ? "hello" : str;
     }
+    */
     
     /*private void setButtonsName(){
         List<TerminalButton> terminalButtons = configuration.getTerminalButtons();

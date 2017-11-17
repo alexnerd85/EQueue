@@ -36,7 +36,9 @@
                   dbPassword = $( "#dbPassword" ),
                   adminLogin = $( "#adminLogin" ),
                   adminPassword = $( "#adminPassword" ),
-                  allFields = $( [] ).add(dbAdress).add(dbName).add(dbLogin).add(dbPassword).add(adminLogin).add(adminPassword),
+                  appLanguage = $( "#appLanguage" ),
+                  allFields = $( [] ).add(dbAdress).add(dbName).add(dbLogin).add(dbPassword)
+                          .add(adminLogin).add(adminPassword).add(appLanguage),
                   tips = $( ".validateTips" );
 
                 function updateTips( t ) {
@@ -68,6 +70,16 @@
                     return true;
                   }
                 }
+                
+                 function checkLanguage(o, n){
+                    if(o.val() === null){
+                        o.addClass( "ui-state-error" );
+                        updateTips( n );
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
 
                 function addConfig() {                    
                     var valid = true;
@@ -79,14 +91,17 @@
                     valid = valid && checkLength( dbPassword, "dbPassword", 6, 30 );
                     valid = valid && checkLength( adminLogin, "adminLogin", 3, 16 );
                     valid = valid && checkLength( adminPassword, "adminPassword", 5, 16 );
-
+                    
+                    valid = valid && checkLanguage( appLanguage, "Выберите язык интерфейса");
+                    
                     valid = valid && checkRegexp( dbAdress, /^([a-zA-Z])([0-9a-zA-Z_])+$/,"Адрес для подключения к базе данных должен начинаться с латинской буквы и может состоять из латинских букв, цифр и нижнего подчеркивания");
                     valid = valid && checkRegexp( dbName, /^([a-zA-Z0-9])+$/i, "Имя базы данных должно состоять только из букв латинского алфавита и цифрв" );            
                     valid = valid && checkRegexp( dbLogin, /^([A-Za-z0-9])+$/i, "Логин для подключения к базе данных должен состоять только из букв латинского алфавита и цифр" );
                     valid = valid && checkRegexp( dbPassword, /^([A-ZА-Яа-яa-z0-9])+$/i, "Пароль может состоять из букв и цифр" );
                     valid = valid && checkRegexp( adminLogin, /^([0-9a-zа-яА-ЯA-Z])+$/, "Логин для подключения к программе может состоять из букв и цифр" );
                     valid = valid && checkRegexp( adminPassword, /^([0-9a-zA-Z])+$/, "Допустимые символы для пароля: a-z A-Z 0-9" );
-
+                                      
+                    
                     if ( valid ) {                      
                         $.post("equeuemain",{action:"main_action",
                                         main_action:"add-config",
@@ -95,7 +110,8 @@
                                         dbLogin:dbLogin.val(),
                                         dbPassword:dbPassword.val(),
                                         adminLogin:adminLogin.val(),
-                                        adminPassword:adminPassword.val()});
+                                        adminPassword:adminPassword.val(),
+                                        appLanguage:appLanguage.val()});
                         dialog.dialog( "close" );                     
                     }
                     return valid;
@@ -103,7 +119,7 @@
 
                 dialog = $( "#wizard-form" ).dialog({
                   autoOpen: false,
-                  height: 600,
+                  height: 650,
                   width: 500,
                   modal: true,
                   show: {
@@ -157,6 +173,12 @@
                     <input name="adminLogin" id="adminLogin" placeholder="Введите логин администратора электронной очереди" class="text ui-widget-content ui-corner-all">
                     <label for="adminPassword">Пароль администратора электронной очереди</label>
                     <input type="password" name="adminPassword" id="adminPassword" placeholder="Введите пароль администратора электронной очереди" class="text ui-widget-content ui-corner-all">
+                    <label for="appLagnuage">Выберите язык интерфейса:</label>
+                    <select name="appLanguage" id="appLanguage">
+                        <option disabled selected="selected">Выберите язык</option>
+                        <option value="ru">Русский (РУС)</option>
+                        <option value="en">English (EN)</option>                        
+                    </select>
                     <!-- Allow form submission with keyboard without duplicating the dialog button -->
                     <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
                 </fieldset>
