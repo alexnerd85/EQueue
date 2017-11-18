@@ -56,18 +56,7 @@ public class InitEQueueListener implements ServletContextListener {
         equeue.setCompanyName("Камчатский краевой кардиологический диспансер");
         equeue.setRunningString("Бегущая строка");
         servletContext.setAttribute("equeue", equeue); 
-        
-        
-        String resourceName = "config.properties"; // could also be a constant
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        Properties props = new Properties();
-        try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
-            props.load(resourceStream);
-            equeue.setProperties(props);
-        } catch (IOException ex) {
-            Logger.getLogger(InitEQueueListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+                
     }
 
     @Override

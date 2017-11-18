@@ -126,6 +126,10 @@
                     effect: 'fade',
                     duration: 800  
                   },
+                  hide: {
+                    effect: 'drop',
+                    duration: 800
+                  },
                   buttons: {
                     "Сохранить": addConfig,
                     "Отмена": function() {
@@ -176,7 +180,7 @@
                     <label for="appLagnuage">Выберите язык интерфейса:</label>
                     <select name="appLanguage" id="appLanguage">
                         <option disabled selected="selected">Выберите язык</option>
-                        <option value="ru">Русский (РУС)</option>
+                        <option value="ru">Русский (RU)</option>
                         <option value="en">English (EN)</option>                        
                     </select>
                     <!-- Allow form submission with keyboard without duplicating the dialog button -->

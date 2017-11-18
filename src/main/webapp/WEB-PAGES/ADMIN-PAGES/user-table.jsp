@@ -44,27 +44,27 @@
         <th>Имя</th>
         <th>Отчество</th>
         <th>Пароль</th>
-        <th>Номер окна<br>(для операторов)</th>
+        <th>Номер окна</th>
     </tr>            
     <c:forEach var="user" items="${equeue.users}">
         <tr>
             <td>${user.login}</td>
             <td name="userRole">${user.userRole}</td>
             <td>
-                <input name="sirname" size="15" value="<c:out value='${user.sirname}'/>">
+                <input name="sirname" size="10" value="<c:out value='${user.sirname}'/>">
             </td>
             <td>
-                <input name="name" size="15" value="<c:out value='${user.name}'/>">
+                <input name="name" size="10" value="<c:out value='${user.name}'/>">
             </td>
             <td>
-                <input name="middlename" size="15" value="<c:out value='${user.middlename}'/>">
+                <input name="middlename" size="10" value="<c:out value='${user.middlename}'/>">
             </td>
             <td>
-                <input type="password" name="password" size="15" value="<c:out value='${user.password}'/>">
+                <input type="password" name="password" size="3" value="<c:out value='${user.password}'/>">
             </td>
              <td>
                  <c:if test="${user.userRole eq 'OPERATOR'}">
-                     <input name="windowNumber" size="15" value="<c:out value='${user.numWindow}'/>">
+                     <input name="windowNumber" size="3" value="<c:out value='${user.numWindow}'/>">
                  </c:if>                
             </td>
             <td>

@@ -115,15 +115,33 @@ public class EQueueServlet extends HttpServlet {
                 case "window":
                     url = "/WEB-PAGES/WINDOW/window.jsp";
                     break;
-                case "checkConfig":
-                    if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
+                case "checkConfig":                    
+                    /*if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
                         try (PrintWriter out = response.getWriter()) {
                             out.println("true");
                             out.flush();
                         }
+                    }*/                    
+                    
+                    try (PrintWriter out = response.getWriter()) {
+                            out.println("true");
+                            out.flush();
                     }
+                    
                     break;
                 case "add-config":
+                    Properties props = equeue.getProperties();
+                    props.setProperty(
+                            "dbAdress", request.getParameter("dbAdress"));
+                    props.setProperty(
+                            "dbName", request.getParameter("dbName"));
+                    props.setProperty(
+                            "dbLogin", request.getParameter("dbLogin"));
+                    props.setProperty(
+                            "dbPassword", request.getParameter("dbPassword"));
+                    props.setProperty(
+                            "appLanguage", request.getParameter("appLanguage"));
+                    equeue.setProperties(props);
                     
                     equeue.addUser(new Admin(
                                 request.getParameter("adminLogin"),
@@ -132,15 +150,13 @@ public class EQueueServlet extends HttpServlet {
                                 "",
                                 ""
                     ));
+                    
                     break;
                 default:
                     throw new ServletException("Unknown request");
             }
         }
         
-        
-        //request.setAttribute("config", config);
-        //request.setAttribute("equeue", equeue);
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 

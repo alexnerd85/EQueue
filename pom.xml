@@ -4,7 +4,7 @@
 
     <groupId>com.alexnerd</groupId>
     <artifactId>EQueue</artifactId>
-    <version>1.0</version>
+    <version>0.1</version>
     <packaging>war</packaging>
 
     <name>EQueue</name>

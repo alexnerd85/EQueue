@@ -5,21 +5,37 @@
  */
 package com.alexnerd.data;
 
+import com.alexnerd.listeners.InitEQueueListener;
 import com.alexnerd.ticket.Ticket;
 import com.alexnerd.ticket.TicketStatus;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Queue;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Popov Aleksey 2017
  */
 public class EQueue implements Serializable{
-    private static final long serialVersionUID = 1L;    
+    private static final long serialVersionUID = 1L; 
+    private final String resourceName = "config.properties";
 
     private final Queue<Ticket> queue;
     private final List<User> users;
@@ -41,16 +57,9 @@ public class EQueue implements Serializable{
         queue = new LinkedList();
         users = new ArrayList();
         terminalButtons = new ArrayList();
+        this.properties = initProperties();
     }
     
-    public synchronized void setProperties(Properties properties){
-        this.properties = properties;
-    }
-    
-    public synchronized Properties getProperties(){
-        return properties;
-    }
-
     public synchronized String getRunningString() {
         return runningString;
     }
@@ -194,6 +203,37 @@ public class EQueue implements Serializable{
     public synchronized UserRole[] getUserRoles(){
         return UserRole.values();
     }
+    
+    //Working with properties block
+    
+    public synchronized void setProperties(Properties properties){
+        this.properties = properties;
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(resourceName))){
+            this.properties.store(bw, "EQueue properties file");            
+        } catch (FileNotFoundException ex) { 
+            Logger.getLogger(EQueue.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EQueue.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+    
+    public synchronized Properties getProperties(){
+        return properties;
+    }
+    
+    private Properties initProperties(){        
+        Properties props = new Properties();        
+        try(BufferedReader fr = new BufferedReader(new FileReader(resourceName))){
+            props.load(fr);            
+        } catch (IOException ex) {
+            Logger.getLogger(InitEQueueListener.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+        return props;
+    }
+    
+    //End block
+    
+        
     
     /*
     public synchronized String checkNullRequest(String str){

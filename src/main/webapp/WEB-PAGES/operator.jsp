@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,14 @@
         </div>
         <div class="main">
             <div class="ticket">
-                Талон №<span style="color: green;">${sessionScope.user.ticket}</span>
+                <c:choose>
+                    <c:when test="${sessionScope.user.available}">
+                        Талон №<span style="color: green;">${sessionScope.user.ticket}</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span style="color:red; font-size: 60%;">ОКНО НЕ АКТИВНО</span>
+                    </c:otherwise>
+                </c:choose>                
             </div>            
             <form  action="operator" method="post">
                 <div class="buttons-block">
