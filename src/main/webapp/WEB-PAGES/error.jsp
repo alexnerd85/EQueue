@@ -1,7 +1,10 @@
 <%-- 
     Document   : error
     Created on : 27.09.2017, 12:12:34
-    Author     : Popov Aleksey 2017
+    Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>

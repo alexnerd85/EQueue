@@ -2,6 +2,9 @@
     Document   : Table
     Created on : 11.06.2017, 16:47:03
     Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page import="com.alexnerd.data.UserRole"%>

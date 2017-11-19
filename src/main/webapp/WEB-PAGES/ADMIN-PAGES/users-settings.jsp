@@ -1,7 +1,10 @@
 <%-- 
     Document   : users-settings
     Created on : 16.10.2017, 18:58:25
-    Author     : Popov Aleksey 2017
+    Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -1,7 +1,10 @@
 <%-- 
     Document   : table-settings
     Created on : 16.10.2017, 18:57:21
-    Author     : user
+    Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

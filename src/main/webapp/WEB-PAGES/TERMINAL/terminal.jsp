@@ -2,6 +2,9 @@
     Document   : Terminal
     Created on : 10.06.2017, 18:29:05
     Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>

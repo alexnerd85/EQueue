@@ -1,7 +1,10 @@
 <%-- 
     Document   : user-table
     Created on : 07.11.2017, 21:43:14
-    Author     : Popov Aleksey 2017
+    Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

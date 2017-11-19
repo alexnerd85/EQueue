@@ -1,7 +1,10 @@
 <%-- 
     Document   : button-table
     Created on : 11.11.2017, 15:09:56
-    Author     : Popov Aleksey 2017
+    Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

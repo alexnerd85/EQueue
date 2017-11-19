@@ -1,9 +1,10 @@
 <%-- 
     Document   : Window
     Created on : 11.06.2017, 18:38:18
-    Author     : Popov Aleksey 2017
-
-Талон №<span style="color:green;">${sessionScope.user.ticket}</span>
+    Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

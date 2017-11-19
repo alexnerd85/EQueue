@@ -2,6 +2,9 @@
     Document   : select-operator
     Created on : 18.11.2017, 19:07:34
     Author     : Popov Aleksey
+    Site       : alexnerd.com
+    Email      : alexnerd85@gmail.com
+    GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
