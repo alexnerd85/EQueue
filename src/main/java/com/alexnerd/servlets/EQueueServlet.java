@@ -7,6 +7,7 @@ package com.alexnerd.servlets;
 
 import com.alexnerd.data.Admin;
 import com.alexnerd.data.EQueue;
+import com.alexnerd.data.UserRole;
 import com.alexnerd.listeners.InitEQueueListener;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,9 +97,7 @@ public class EQueueServlet extends HttpServlet {
         Configuration config = new Configuration();
         HttpSession session = request.getSession();
         session.setAttribute("equeue", equeue);*/
-        
-        
-        
+                
         if(action != null){
             switch (action) {
                 case "administration":
@@ -110,10 +110,12 @@ public class EQueueServlet extends HttpServlet {
                     url = "/WEB-PAGES/TABLE/table.jsp";
                     break;
                 case "operator":
-                    url = "/operator";                    
+                    //url = "/operator";                 
+                    url="/WEB-PAGES/select-operator.jsp";
                     break;
                 case "window":
-                    url = "/WEB-PAGES/WINDOW/window.jsp";
+                    //url = "/WEB-PAGES/WINDOW/window.jsp";
+                    url="/WEB-PAGES/select-window.jsp";
                     break;
                 case "checkConfig":                    
                     /*if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
@@ -126,8 +128,7 @@ public class EQueueServlet extends HttpServlet {
                     try (PrintWriter out = response.getWriter()) {
                             out.println("true");
                             out.flush();
-                    }
-                    
+                    }                    
                     break;
                 case "add-config":
                     Properties props = equeue.getProperties();
@@ -149,12 +150,28 @@ public class EQueueServlet extends HttpServlet {
                                 "",
                                 "",
                                 ""
-                    ));
-                    
-                    break;
+                    ));                    
+                    break; 
+                /*case "select_operator":
+                    System.out.println("************************************ FROM OPERATOR");
+                    url="/operator";
+                    break;*/
                 default:
                     throw new ServletException("Unknown request");
             }
+        }
+        String selectOperator = request.getParameter("select_operator");
+        if(selectOperator != null){
+            session.setAttribute("user", equeue.getUserByIdAndRole(
+                    Long.valueOf(selectOperator), UserRole.OPERATOR));
+            url="/operator";
+        }
+        
+        String selectWindow = request.getParameter("select_window");
+        if(selectWindow != null){
+            session.setAttribute("user", equeue.getUserByIdAndRole(
+                    Long.valueOf(selectWindow), UserRole.OPERATOR));
+            url="/WEB-PAGES/WINDOW/window.jsp";
         }
         
         getServletContext().getRequestDispatcher(url).forward(request, response);

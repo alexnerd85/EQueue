@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <link rel="EQueue icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" media="screen" href="jquery-ui-1.12.1.custom/jquery-ui.css"/>
         
         <style>
