@@ -78,58 +78,7 @@ public class EQueue implements Serializable{
         return queue.poll();
     } 
     
-    public synchronized void addUser(User user){
-        users.add(user);
-    }
-    
-    public synchronized User getUser(int number){        
-        return users.get(number);
-    }
-    
-    public synchronized User getUser(User user){
-        int i = users.indexOf(user);
-        if(i != -1)
-            return users.get(i);
-        else
-            return null;
-    }
-    
-    public synchronized User getUserById(long userId){        
-        for(User user : users){
-            if(user.getUserId() == userId){
-                return user;
-            }           
-        }
-        return null;
-    }
-    
-    public synchronized User getUserByIdAndRole(long userId, UserRole userRole){        
-        for(User user : users){
-            if(user.getUserId() == userId && user.getUserRole() == userRole){
-                return user;
-            }           
-        }
-        return null;
-    }
-    
-    public synchronized boolean deleteUser(User user){
-        return users.remove(user);
-    }
-    
-    public synchronized boolean deleteUser(long userId){
-        boolean isDelete = false;
-        for(User user : users){
-            if(user.getUserId() == userId){
-                isDelete = users.remove(user);
-                break;
-            }           
-        }
-        return isDelete;
-    }
-    
-    public synchronized List getUsers(){        
-        return users;
-    }
+
     
     public synchronized int getQueueLength(){
         int i = 0;
@@ -200,9 +149,72 @@ public class EQueue implements Serializable{
         return terminalButtons.remove(button);
     }
     
+    
+    
+    //Working with users block
+    
+    public synchronized List getUsers(){        
+        return users;
+    }
+    
+    public synchronized void addUser(User user){
+        users.add(user);
+    }
+    
+    public synchronized User getUser(int number){        
+        return users.get(number);
+    }
+    
+    public synchronized User getUser(User user){
+        int i = users.indexOf(user);
+        if(i != -1)
+            return users.get(i);
+        else
+            return null;
+    }
+    
+    public synchronized User getUserById(long userId){        
+        for(User user : users){
+            if(user.getUserId() == userId){
+                return user;
+            }           
+        }
+        return null;
+    }
+    
+    public synchronized User getUserByIdAndRole(long userId, UserRole userRole){        
+        for(User user : users){
+            if(user.getUserId() == userId && user.getUserRole() == userRole){
+                return user;
+            }           
+        }
+        return null;
+    }
+    
+    public synchronized User getUserByLogin(String login){
+        return users.stream().filter(s -> s.getLogin().equals(login)).findAny().orElse(null);
+    }
+    
+    public synchronized boolean deleteUser(User user){
+        return users.remove(user);
+    }
+    
+    public synchronized boolean deleteUser(long userId){
+        boolean isDelete = false;
+        for(User user : users){
+            if(user.getUserId() == userId){
+                isDelete = users.remove(user);
+                break;
+            }           
+        }
+        return isDelete;
+    }    
+    
     public synchronized UserRole[] getUserRoles(){
         return UserRole.values();
     }
+    
+    //End block
     
     //Working with properties block
     

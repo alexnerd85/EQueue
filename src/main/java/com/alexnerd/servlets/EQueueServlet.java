@@ -5,19 +5,13 @@
  */
 package com.alexnerd.servlets;
 
-import com.alexnerd.data.Admin;
 import com.alexnerd.data.EQueue;
+import com.alexnerd.data.User;
 import com.alexnerd.data.UserRole;
-import com.alexnerd.listeners.InitEQueueListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,22 +77,17 @@ public class EQueueServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response )       
+        
         String url = "/WEB-PAGES/equeuemain.jsp";
+        
         EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
-        HttpSession session = request.getSession();
-        session.setAttribute("user", equeue.getUser(0));
+        
+        HttpSession session = request.getSession();    
         
         String action = request.getParameter("main_action");
-                    
-        /*if(equeue == null){
-            equeue = new EQueue();
-        }
-        Configuration config = new Configuration();
-        HttpSession session = request.getSession();
-        session.setAttribute("equeue", equeue);*/
                 
         if(action != null){
+            User user = (User) session.getAttribute("user");;
             switch (action) {
                 case "administration":
                     url = "/admin";
@@ -110,52 +99,23 @@ public class EQueueServlet extends HttpServlet {
                     url = "/WEB-PAGES/TABLE/table.jsp";
                     break;
                 case "operator":
-                    //url = "/operator";                 
-                    url="/WEB-PAGES/select-operator.jsp";
+                    if(user.getUserRole() == UserRole.OPERATOR){
+                        url = "/operator";
+                    } else if(user.getUserRole() == UserRole.ADMIN){
+                        url="/WEB-PAGES/select-operator.jsp";
+                    }
                     break;
                 case "window":
-                    //url = "/WEB-PAGES/WINDOW/window.jsp";
-                    url="/WEB-PAGES/select-window.jsp";
+                    if(user.getUserRole() == UserRole.OPERATOR){
+                        url = "/WEB-PAGES/WINDOW/window.jsp";
+                    } else if(user.getUserRole() == UserRole.ADMIN){
+                        url="/WEB-PAGES/select-window.jsp";
+                    }
                     break;
-                case "checkConfig":                    
-                    /*if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
-                        try (PrintWriter out = response.getWriter()) {
-                            out.println("true");
-                            out.flush();
-                        }
-                    }*/                    
-                    
-                    try (PrintWriter out = response.getWriter()) {
-                            out.println("true");
-                            out.flush();
-                    }                    
+                case "exit":
+                    url = "/login";
+                    session.setAttribute("user", null);
                     break;
-                case "add-config":
-                    Properties props = equeue.getProperties();
-                    props.setProperty(
-                            "dbAdress", request.getParameter("dbAdress"));
-                    props.setProperty(
-                            "dbName", request.getParameter("dbName"));
-                    props.setProperty(
-                            "dbLogin", request.getParameter("dbLogin"));
-                    props.setProperty(
-                            "dbPassword", request.getParameter("dbPassword"));
-                    props.setProperty(
-                            "appLanguage", request.getParameter("appLanguage"));
-                    equeue.setProperties(props);
-                    
-                    equeue.addUser(new Admin(
-                                request.getParameter("adminLogin"),
-                                request.getParameter("adminPassword"),
-                                "",
-                                "",
-                                ""
-                    ));                    
-                    break; 
-                /*case "select_operator":
-                    System.out.println("************************************ FROM OPERATOR");
-                    url="/operator";
-                    break;*/
                 default:
                     throw new ServletException("Unknown request");
             }
@@ -173,7 +133,6 @@ public class EQueueServlet extends HttpServlet {
                     Long.valueOf(selectWindow), UserRole.OPERATOR));
             url="/WEB-PAGES/WINDOW/window.jsp";
         }
-        
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 

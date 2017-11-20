@@ -106,8 +106,7 @@
                                       
                     
                     if ( valid ) {                      
-                        $.post("equeuemain",{action:"main_action",
-                                        main_action:"add-config",
+                        $.post("login",{action:"add-config",
                                         dbAdress:dbAdress.val(),
                                         dbName:dbName.val(),
                                         dbLogin:dbLogin.val(),
@@ -151,22 +150,21 @@
                 });
 
                 $( "#wizard-form" ).ready( function() {
-                    $.post("equeuemain", {action: "main_action",
-                                          main_action:"checkConfig"},function(data){
+                    $.post("login", {action: "check-config"},function(data){
                         if($.trim(data) === 'true'){
                             dialog.dialog( "open" );
                         }  
                     });                                    
                 });
                   
-              });
+              });              
         </script>
         <title>Электронная очередь</title>
     </head>
     <body>
         <div id="wizard-form" title="Начальная настройка">
             <p class="validateTips">Все поля обязательны.</p> 
-            <form action="equeuemain" method="post">
+            <form action="login" method="post">
                 <fieldset>
                     <label for="dbAdress">Адрес базы данных</label>
                     <input type="text" name="dbAdress" id="dbAdress" placeholder="Введите адрес базы данных" class="text ui-widget-content ui-corner-all">
@@ -192,14 +190,14 @@
              </form>
         </div> 
         <div class="form-login">
-        <form class="form-container">
+            <form class="form-container" action="login" method="post">
             <div class="form-title"><h2>Электронная очередь</h2></div>
             <div class="form-title">Логин</div>
-                <input class="form-field" type="text" name="firstname" /><br />
+                <input class="form-field" type="text" name="user_login" /><br />
             <div class="form-title">Пароль</div>
-                <input class="form-field" type="text" name="email" /><br />
+            <input class="form-field" type="password" name="user_password" /><br />
             <div class="submit-container">
-                <button class="submit-button" type="submit" value="Войти">Войти</button>
+                <button class="submit-button" type="submit" name="action" value="login">Войти</button>
             </div>
         </form>
         </div>

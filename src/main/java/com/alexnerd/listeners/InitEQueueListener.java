@@ -5,6 +5,7 @@
  */
 package com.alexnerd.listeners;
 
+import com.alexnerd.data.Admin;
 import com.alexnerd.data.EQueue;
 import com.alexnerd.data.Operator;
 import com.alexnerd.data.TerminalButton;
@@ -40,6 +41,7 @@ public class InitEQueueListener implements ServletContextListener {
         equeue.addUser(new Operator("pupkin","123", "Пупкин", "Василий", "Васильевич", false));
         equeue.addUser(new Operator("kondr","123", "Кондратенко", "Андрей", "Аркадьевич", false));
         equeue.addUser(new Operator("mefodiy","123", "Мефодий", "Кирилл", "Афанасьевич", false));
+        equeue.addUser(new Admin("admin","123","Иванов", "Иван", "Иванович"));
         /*equeue.getUser(0).setUserId(1);
         equeue.getUser(1).setUserId(2);
         equeue.getUser(2).setUserId(3);*/

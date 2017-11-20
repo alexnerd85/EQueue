@@ -37,6 +37,8 @@
                     <br>
                     <p><button class="button" name="main_action" value="statistic">Статистика</button></p>
                     <br>
+                    <p><button class="button" name="main_action" value="exit">Выход</button></p>
+                    <br>
                 </form>
             </div>
         </div>
