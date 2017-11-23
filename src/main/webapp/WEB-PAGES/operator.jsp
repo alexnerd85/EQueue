@@ -15,17 +15,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link type="text/css" rel="stylesheet" href="styles/main.css">
         <link type="text/css" rel="stylesheet" href="styles/operator.css">
-        <title>Operator</title>
+        <title>Оператор</title>
     </head>
     <body>
         <div class="header">
-            <h1>Окно № ${sessionScope.user.numWindow}</h1>
+            <h1>Окно № ${empty sessionScope.hiddenUser ? sessionScope.user.numWindow : sessionScope.hiddenUser.numWindow}</h1>
         </div>
         <div class="main">
             <div class="ticket">
                 <c:choose>
-                    <c:when test="${sessionScope.user.available}">
-                        Талон №<span style="color: green;">${sessionScope.user.ticket}</span>
+                    <c:when test="${empty sessionScope.hiddenUser ? sessionScope.user.available : sessionScope.hiddenUser.available}">
+                        Талон №<span style="color: green;">${empty sessionScope.hiddenUser ? sessionScope.user.ticket : sessionScope.hiddenUser.ticket}</span>
                     </c:when>
                     <c:otherwise>
                         <span style="color:red; font-size: 60%;">ОКНО НЕ АКТИВНО</span>
@@ -47,6 +47,6 @@
             Очередь:
             <br/>
             Общее количество человек: ${equeue.getQueueLength()}
-        </div>
+        </div>       
     </body>
 </html>

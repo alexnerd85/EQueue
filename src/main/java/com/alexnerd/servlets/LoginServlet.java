@@ -5,9 +5,9 @@
  */
 package com.alexnerd.servlets;
 
-import com.alexnerd.data.Admin;
+import com.alexnerd.data.users.Admin;
 import com.alexnerd.data.EQueue;
-import com.alexnerd.data.User;
+import com.alexnerd.data.users.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -19,8 +19,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Aleksey
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 public class LoginServlet extends HttpServlet {
         
     @Override
@@ -41,17 +46,28 @@ public class LoginServlet extends HttpServlet {
         if(action != null){
             switch(action){
                 case "check-config":
-                    /*if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
+                    System.out.println("*************************************** CHECK CONFIG NOT NULL");                    
+                    if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
+                        try (PrintWriter out = response.getWriter()) {
+                            out.println("true");
+                            out.flush();
+                        }
+                    } else {
+                        System.out.println("*************************************** dbAdress " + equeue.getProperties().getProperty("dbAdress"));                
+                        System.out.println("*************************************** dbName " + equeue.getProperties().getProperty("dbName"));                
+                        System.out.println("*************************************** dbLogin " + equeue.getProperties().getProperty("dbLogin"));                
+                        System.out.println("*************************************** dbPassword " + equeue.getProperties().getProperty("dbPassword"));                
+                        System.out.println("*************************************** appLanguage " + equeue.getProperties().getProperty("appLanguage"));                
+                        
+                    }
+                    
+                    /*
+                    System.out.println("*************************************** CHECK CONFIG NOT NULL");                    
                     try (PrintWriter out = response.getWriter()) {
                         out.println("true");
                         out.flush();
                     }
-                    }*/
-                    System.out.println("*************************************** CHECK CONFIG NOT NULL");
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("true");
-                        out.flush();
-                    }
+                    */
                     break;
                     
                 case "add-config":

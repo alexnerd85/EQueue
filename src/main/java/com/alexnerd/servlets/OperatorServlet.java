@@ -6,8 +6,8 @@
 package com.alexnerd.servlets;
 
 import com.alexnerd.data.EQueue;
-import com.alexnerd.data.Operator;
-import com.alexnerd.data.User;
+import com.alexnerd.data.users.Operator;
+import com.alexnerd.data.users.User;
 import com.alexnerd.ticket.Ticket;
 import com.alexnerd.ticket.TicketStatus;
 import java.io.IOException;
@@ -22,8 +22,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Popov Aleksey 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 @WebServlet(name = "OperatorServlet", urlPatterns = {"/operator"})
 public class OperatorServlet extends HttpServlet {
 
@@ -83,7 +88,12 @@ public class OperatorServlet extends HttpServlet {
         
         String action = request.getParameter("operator_action");
         HttpSession session = request.getSession();
-        Operator operator = (Operator) session.getAttribute("user");
+        
+        Operator operator = (Operator) session.getAttribute("hiddenUser");
+        
+        if( operator == null){
+            operator = (Operator) session.getAttribute("user");
+        } 
         
         EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");        
         

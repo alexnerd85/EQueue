@@ -5,14 +5,20 @@
  */
 package com.alexnerd.data;
 
+import com.alexnerd.data.users.Operator;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  *
- * @author Popov Alekset 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 public class Configuration implements Serializable{
     private static final long serialVersionUID = 1L;
     

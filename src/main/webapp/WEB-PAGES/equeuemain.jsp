@@ -7,6 +7,7 @@
     GitHub     : https://github.com/alexnerd85/EQueue
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,19 +25,27 @@
             </div>
             <div class="flex-item">
                 <form  action="equeuemain" method="post">
-                    <br>
-                    <p><button class="button" name="main_action" value="administration">Администрирование</button></p>
-                    <br>
-                    <p><button class="button" name="main_action" value="terminal">Терминал</button></p>
-                    <br>
-                    <p><button class="button" name="main_action" value="table">Расписание</button></p>
-                    <br>
-                    <p><button class="button" name="main_action" value="operator">Оператор</button></p>
-                    <br>
-                    <p><button class="button" name="main_action" value="window">Окно</button></p>
-                    <br>
-                    <p><button class="button" name="main_action" value="statistic">Статистика</button></p>
-                    <br>
+                    <c:if test="${sessionScope.user.userRole eq 'ADMIN'}">
+                        <br>
+                        <p><button class="button" name="main_action" value="administration">Администрирование</button></p>
+                        <br>
+                    </c:if>
+                    <c:if test="${sessionScope.user.userRole eq 'ADMIN' or sessionScope.user.userRole eq 'USER'}">
+                        <p><button class="button" name="main_action" value="terminal">Терминал</button></p>
+                        <br>
+                        <p><button class="button" name="main_action" value="table">Расписание</button></p>
+                        <br>
+                    </c:if>
+                    <c:if test="${sessionScope.user.userRole eq 'ADMIN' or sessionScope.user.userRole eq 'OPERATOR'}">
+                        <p><button class="button" name="main_action" value="operator">Оператор</button></p>
+                        <br>
+                        <p><button class="button" name="main_action" value="window">Окно</button></p>
+                        <br>
+                    </c:if>
+                    <c:if test="${sessionScope.user.userRole eq 'ADMIN'}">
+                        <p><button class="button" name="main_action" value="statistic">Статистика</button></p>
+                        <br>
+                    </c:if>                   
                     <p><button class="button" name="main_action" value="exit">Выход</button></p>
                     <br>
                 </form>

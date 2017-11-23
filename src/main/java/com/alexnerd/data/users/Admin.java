@@ -3,16 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.alexnerd.data;
+package com.alexnerd.data.users;
 
+import com.alexnerd.data.Available;
+import com.alexnerd.data.users.User;
+import com.alexnerd.data.users.UserRole;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  *
- * @author Popov Aleksey 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 public class Admin implements Serializable, User, Available{
     private static final long serialVersionUID = 1L;
     

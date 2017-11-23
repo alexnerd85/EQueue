@@ -22,11 +22,11 @@
                 }, 1000);
             });
         </script>
-        <title>Окно № ${sessionScope.user.numWindow}</title>
+        <title>Окно № ${empty sessionScope.hiddenUser ? sessionScope.user.numWindow : sessionScope.hiddenUser.numWindow}</title>
     </head>
     <body>
         <div class="header">
-            Окно № ${sessionScope.user.numWindow}
+            Окно № ${empty sessionScope.hiddenUser ? sessionScope.user.numWindow : sessionScope.hiddenUser.numWindow}
         </div>
         <hr>
         <div class="main">

@@ -17,8 +17,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author user
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 @WebServlet(name = "TableServlet", urlPatterns = {"/table"})
 public class TableServlet extends HttpServlet {
 

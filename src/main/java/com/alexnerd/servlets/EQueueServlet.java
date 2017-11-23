@@ -6,8 +6,8 @@
 package com.alexnerd.servlets;
 
 import com.alexnerd.data.EQueue;
-import com.alexnerd.data.User;
-import com.alexnerd.data.UserRole;
+import com.alexnerd.data.users.User;
+import com.alexnerd.data.users.UserRole;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Popov Aleksey 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 @WebServlet(name = "EQueueServlet", urlPatterns = {"/equeuemain"})
 public class EQueueServlet extends HttpServlet {  
 
@@ -79,7 +84,7 @@ public class EQueueServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String url = "/WEB-PAGES/equeuemain.jsp";
-        
+        //System.out.println("************************ REAL PATH " + this.getServletContext().getRealPath("/WEB-PAGES/app-config.properties"));
         EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         
         HttpSession session = request.getSession();    
@@ -102,7 +107,7 @@ public class EQueueServlet extends HttpServlet {
                     if(user.getUserRole() == UserRole.OPERATOR){
                         url = "/operator";
                     } else if(user.getUserRole() == UserRole.ADMIN){
-                        url="/WEB-PAGES/select-operator.jsp";
+                        url="/WEB-PAGES/select-operator.jsp";                        
                     }
                     break;
                 case "window":
@@ -114,7 +119,8 @@ public class EQueueServlet extends HttpServlet {
                     break;
                 case "exit":
                     url = "/login";
-                    session.setAttribute("user", null);
+                    //session.setAttribute("user", null);
+                    session.invalidate();
                     break;
                 default:
                     throw new ServletException("Unknown request");
@@ -122,14 +128,14 @@ public class EQueueServlet extends HttpServlet {
         }
         String selectOperator = request.getParameter("select_operator");
         if(selectOperator != null){
-            session.setAttribute("user", equeue.getUserByIdAndRole(
+            session.setAttribute("hiddenUser", equeue.getUserByIdAndRole(
                     Long.valueOf(selectOperator), UserRole.OPERATOR));
             url="/operator";
         }
         
         String selectWindow = request.getParameter("select_window");
         if(selectWindow != null){
-            session.setAttribute("user", equeue.getUserByIdAndRole(
+            session.setAttribute("hiddenUser", equeue.getUserByIdAndRole(
                     Long.valueOf(selectWindow), UserRole.OPERATOR));
             url="/WEB-PAGES/WINDOW/window.jsp";
         }

@@ -10,8 +10,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:choose>
-    <c:when test="${sessionScope.user.available}">
-        Талон №<span style="color:green;">${sessionScope.user.ticket}</span>
+    <c:when test="${empty sessionScope.hiddenUser ? sessionScope.user.available : sessionScope.hiddenUser.available}">
+        Талон №<span style="color:green;">${empty sessionScope.hiddenUser ? sessionScope.user.ticket : sessionScope.hiddenUser.ticket}</span>
     </c:when>
     <c:otherwise>
         <span style="color:red;">ОКНО НЕ АКТИВНО</span>

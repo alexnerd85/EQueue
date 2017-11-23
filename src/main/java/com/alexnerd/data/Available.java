@@ -7,8 +7,13 @@ package com.alexnerd.data;
 
 /**
  *
- * @author Popov Aleksey 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 public interface Available {
     public boolean isAvailable();
 }

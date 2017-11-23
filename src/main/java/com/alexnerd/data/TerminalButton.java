@@ -12,8 +12,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  *
- * @author Popov Aleksey 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 public class TerminalButton implements Serializable, Available{
     private static final long serialVersionUID = 1L;
     

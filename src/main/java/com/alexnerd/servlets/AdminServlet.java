@@ -6,10 +6,10 @@
 package com.alexnerd.servlets;
 
 import com.alexnerd.data.EQueue;
-import com.alexnerd.data.Operator;
+import com.alexnerd.data.users.Operator;
 import com.alexnerd.data.TerminalButton;
-import com.alexnerd.data.User;
-import com.alexnerd.data.UserRole;
+import com.alexnerd.data.users.User;
+import com.alexnerd.data.users.UserRole;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,8 +21,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Popov Aleksey 2017
+ *   @Created on : 19.11.2017
+ *   @Author     : Popov Aleksey
+ *   @Site       : alexnerd.com
+ *   @Email      : alexnerd85@gmail.com
+ *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 @WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
 public class AdminServlet extends HttpServlet {
 
