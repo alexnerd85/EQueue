@@ -5,19 +5,12 @@
  */
 package com.alexnerd.data;
 
-import com.alexnerd.data.users.User;
 import com.alexnerd.data.users.UserRole;
 import com.alexnerd.listeners.InitEQueueListener;
 import com.alexnerd.ticket.Ticket;
 import com.alexnerd.ticket.TicketStatus;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -27,13 +20,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Queue;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.alexnerd.data.users.EQueueUser;
+import com.alexnerd.data.users.User;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -45,7 +39,7 @@ public class EQueue implements Serializable{
     private final String resourceName = "config.properties";
 
     private final Queue<Ticket> queue;
-    private final List<User> users;
+    private final List<EQueueUser> users;
     
     //Название организации
     private String companyName;
@@ -170,15 +164,15 @@ public class EQueue implements Serializable{
         return users;
     }
     
-    public synchronized void addUser(User user){
+    public synchronized void addUser(EQueueUser user){
         users.add(user);
     }
     
-    public synchronized User getUser(int number){        
+    public synchronized EQueueUser getUser(int number){        
         return users.get(number);
     }
     
-    public synchronized User getUser(User user){
+    public synchronized EQueueUser getUser(EQueueUser user){
         int i = users.indexOf(user);
         if(i != -1)
             return users.get(i);
@@ -186,8 +180,8 @@ public class EQueue implements Serializable{
             return null;
     }
     
-    public synchronized User getUserById(long userId){        
-        for(User user : users){
+    public synchronized EQueueUser getUserById(long userId){        
+        for(EQueueUser user : users){
             if(user.getUserId() == userId){
                 return user;
             }           
@@ -195,8 +189,8 @@ public class EQueue implements Serializable{
         return null;
     }
     
-    public synchronized User getUserByIdAndRole(long userId, UserRole userRole){        
-        for(User user : users){
+    public synchronized EQueueUser getUserByIdAndRole(long userId, UserRole userRole){        
+        for(EQueueUser user : users){
             if(user.getUserId() == userId && user.getUserRole() == userRole){
                 return user;
             }           
@@ -204,17 +198,17 @@ public class EQueue implements Serializable{
         return null;
     }
     
-    public synchronized User getUserByLogin(String login){
+    public synchronized EQueueUser getUserByLogin(String login){
         return users.stream().filter(s -> s.getLogin().equals(login)).findFirst().orElse(null);
     }
     
-    public synchronized boolean deleteUser(User user){
+    public synchronized boolean deleteUser(EQueueUser user){
         return users.remove(user);
     }
     
     public synchronized boolean deleteUser(long userId){
         boolean isDelete = false;
-        for(User user : users){
+        for(EQueueUser user : users){
             if(user.getUserId() == userId){
                 isDelete = users.remove(user);
                 break;
@@ -225,6 +219,10 @@ public class EQueue implements Serializable{
     
     public synchronized UserRole[] getUserRoles(){
         return UserRole.values();
+    }
+    
+    public synchronized boolean isUniqueLogin(String login){
+        return users.stream().map(s -> s.getLogin()).noneMatch(login::equals);
     }
     
     //End block

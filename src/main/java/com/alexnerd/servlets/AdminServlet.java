@@ -8,7 +8,7 @@ package com.alexnerd.servlets;
 import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.Operator;
 import com.alexnerd.data.TerminalButton;
-import com.alexnerd.data.users.User;
+import com.alexnerd.data.users.Admin;
 import com.alexnerd.data.users.UserRole;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,10 +18,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.alexnerd.data.users.EQueueUser;
+import com.alexnerd.data.users.User;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -84,7 +86,7 @@ public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         //EQueue equeue = (EQueue) request.getAttribute("equeue");
         EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         String url = "/WEB-PAGES/admin.jsp";
@@ -99,9 +101,11 @@ public class AdminServlet extends HttpServlet {
                 String middlename = request.getParameter("userMiddlename");
                 String password = request.getParameter("userPassword");       
                 switch(userRole){
-                    case ADMIN:                    
+                    case ADMIN:
+                        equeue.addUser(new Admin(login, password, sirname, name, middlename));
                         break;
                     case USER:
+                        equeue.addUser(new User(login, password, sirname, name, middlename));
                         break;
                     case OPERATOR:
                         equeue.addUser(new Operator(login, password, sirname, name, middlename, false));
@@ -114,7 +118,7 @@ public class AdminServlet extends HttpServlet {
                 equeue.deleteUser(Long.parseLong(request.getParameter("userId")));
             }  
             if(action.equals("save-user")){
-                User user = equeue.getUserByIdAndRole(
+                EQueueUser user = equeue.getUserByIdAndRole(
                         Long.parseLong(request.getParameter("userId")),
                         UserRole.valueOf(request.getParameter("userRole")));
                 user.setName(request.getParameter("userName"));
@@ -143,6 +147,13 @@ public class AdminServlet extends HttpServlet {
             if(action.equals("delete-button")){
                 equeue.deleteTerminalButton(Long.parseLong(request.getParameter("buttonId")));
             }
+            if(action.equals("check-login")){                
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(equeue.isUniqueLogin(request.getParameter("login")));
+                    out.flush();
+                }
+            }
+              
                 
             
             

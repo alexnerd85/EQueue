@@ -6,7 +6,6 @@
 package com.alexnerd.servlets;
 
 import com.alexnerd.data.EQueue;
-import com.alexnerd.data.users.User;
 import com.alexnerd.data.users.UserRole;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,10 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.alexnerd.data.users.EQueueUser;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -92,7 +92,7 @@ public class EQueueServlet extends HttpServlet {
         String action = request.getParameter("main_action");
                 
         if(action != null){
-            User user = (User) session.getAttribute("user");;
+            EQueueUser user = (EQueueUser) session.getAttribute("user");;
             switch (action) {
                 case "administration":
                     url = "/admin";

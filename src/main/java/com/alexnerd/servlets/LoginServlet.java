@@ -7,7 +7,6 @@ package com.alexnerd.servlets;
 
 import com.alexnerd.data.users.Admin;
 import com.alexnerd.data.EQueue;
-import com.alexnerd.data.users.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -16,10 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.alexnerd.data.users.EQueueUser;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -101,7 +101,7 @@ public class LoginServlet extends HttpServlet {
                         //redirect to error page
                         throw new ServletException("Login and Password fields must not be empty!");
                     } else {
-                        User user = equeue.getUserByLogin(username);
+                        EQueueUser user = equeue.getUserByLogin(username);
                         if (user != null && user.getPassword().equals(password)) {
                             session.setAttribute("user", user);
                             url = "/EQueue/equeuemain";

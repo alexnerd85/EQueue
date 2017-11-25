@@ -5,7 +5,6 @@
  */
 package com.alexnerd.filters;
 
-import com.alexnerd.data.users.User;
 import com.alexnerd.data.users.UserRole;
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,10 +18,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.alexnerd.data.users.EQueueUser;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -48,7 +48,7 @@ public class UserFilter implements Filter {
         boolean loggedIn = session != null && session.getAttribute("user") != null;
         boolean loginRequest = req.getRequestURI().equals(loginURI);
         
-        User user = (User) session.getAttribute("user");
+        EQueueUser user = (EQueueUser) session.getAttribute("user");
         System.out.println("*************************************** FILTER USER");
         
         if(user != null){

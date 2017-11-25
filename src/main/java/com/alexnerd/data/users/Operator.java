@@ -14,14 +14,14 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
  *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
 
-public class Operator implements Serializable, User, Available {
+public class Operator implements EQueueUser, Serializable, Available {
     private static final long serialVersionUID = 1L;    
     
     private static AtomicLong id = new AtomicLong();
@@ -48,7 +48,7 @@ public class Operator implements Serializable, User, Available {
         this.userRole = UserRole.OPERATOR;
     }*/
     
-     public Operator(String login, String password, boolean available, int numWindow){
+    public Operator(String login, String password, boolean available, int numWindow){
          this(login, password, "", "", "", available);
     }
     

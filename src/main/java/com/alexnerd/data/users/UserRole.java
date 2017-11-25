@@ -7,7 +7,7 @@ package com.alexnerd.data.users;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -15,18 +15,5 @@ package com.alexnerd.data.users;
  */
 
 public enum UserRole {
-    ADMIN{
-    @Override
-    public String getString(){return "ADMIN";}
-    }, 
-    OPERATOR{
-    @Override
-    public String getString(){return "OPERATOR";}
-    }, 
-    USER{
-    @Override
-    public String getString(){return "USER";}
-    };
-    
-    public abstract String getString();
+    ADMIN, OPERATOR, USER
 }
