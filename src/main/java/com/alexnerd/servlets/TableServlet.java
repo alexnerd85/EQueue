@@ -6,8 +6,14 @@
 package com.alexnerd.servlets;
 
 import com.alexnerd.data.EQueue;
+import com.alexnerd.data.users.EQueueUser;
+import com.alexnerd.data.users.Operator;
+import com.alexnerd.data.users.UserRole;
+import com.alexnerd.ticket.Ticket;
+import com.alexnerd.ticket.TicketStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +23,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -80,9 +86,45 @@ public class TableServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession session = request.getSession();
-        EQueue equeue = (EQueue) session.getAttribute("equeue");
+        //HttpSession session = request.getSession();
+        EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         String url = "/WEB-PAGES/table.jsp";
+        
+        String action = request.getParameter("action");
+        if(action != null && action.equals("get-operators")){
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                List<EQueueUser> users = equeue.getUsers();
+                System.out.println("1");
+                for(EQueueUser user : users){
+                    System.out.println("2");
+                    if(user.getUserRole() == UserRole.OPERATOR){
+                        Operator operator = (Operator) user;
+                        Ticket ticket = operator.getTicket();
+                        if(operator.isAvailable() && ticket != null)
+                            out.print(operator.getNumWindow() +
+                                "," + ticket + "," + ticket.getStatus() + ";");
+                    }
+                }                
+                out.flush();
+            }
+        }
+        if(action != null && action.equals("change-ticket-status")){
+            int numWindow = Integer.valueOf(request.getParameter("window"));
+            String ticket = request.getParameter("ticket");
+            TicketStatus status = TicketStatus.valueOf(request.getParameter("status"));
+            List<EQueueUser> users = equeue.getUsers();
+            for(EQueueUser user : users){
+                if(user.getUserRole() == UserRole.OPERATOR){
+                    Operator operator = (Operator) user;
+                    if(operator.getNumWindow() == numWindow){
+                        Ticket t = operator.getTicket();
+                        if(t.toString().equals(ticket))
+                            t.setStatus(status);
+                    }
+                }
+            }
+        }
         
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }

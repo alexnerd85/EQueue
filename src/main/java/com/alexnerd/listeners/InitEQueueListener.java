@@ -9,16 +9,10 @@ import com.alexnerd.data.users.Admin;
 import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.Operator;
 import com.alexnerd.data.TerminalButton;
+import com.alexnerd.data.users.User;
 import com.alexnerd.ticket.Ticket;
 import com.alexnerd.ticket.TicketPriority;
 import com.alexnerd.ticket.TicketStatus;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -27,7 +21,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -46,6 +40,7 @@ public class InitEQueueListener implements ServletContextListener {
         equeue.addUser(new Operator("kondr","123", "Кондратенко", "Андрей", "Аркадьевич", false));
         equeue.addUser(new Operator("mefodiy","123", "Мефодий", "Кирилл", "Афанасьевич", false));
         equeue.addUser(new Admin("admin","123","Иванов", "Иван", "Иванович"));
+        equeue.addUser(new User("user","123","Степан","Иванович","Степанов"));
         /*equeue.getUser(0).setUserId(1);
         equeue.getUser(1).setUserId(2);
         equeue.getUser(2).setUserId(3);*/

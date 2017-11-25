@@ -7,7 +7,7 @@ package com.alexnerd.ticket;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -21,29 +21,5 @@ package com.alexnerd.ticket;
 //CANCELLED - Талон отменен оператором
 
 public enum TicketStatus {
-    COMPLETE {
-        @Override
-        public String getString() {
-            return "COMPLETE";
-        }
-    }, INQUEUE {
-        @Override
-        public String getString() {
-            return "INQUEUE";
-        }
-    }, INWORK {
-        @Override
-        public String getString() {
-            return "INWORK";
-        }        
-    }, MISSED {
-        @Override
-        public String getString() {
-            return "MISSED";
-        }
-    };
-    
-    //Абстрактный метод для JSONAdapter
-    //JavaScript не поддерживает перечисления
-    public abstract String getString();
+    COMPLETE, INQUEUE, INWORK, REPEAT, MISSED    
 }

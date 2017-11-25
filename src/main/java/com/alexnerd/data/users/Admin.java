@@ -6,22 +6,22 @@
 package com.alexnerd.data.users;
 
 import com.alexnerd.data.Available;
-import com.alexnerd.data.users.User;
 import com.alexnerd.data.users.UserRole;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
+import com.alexnerd.data.users.EQueueUser;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
  *   @GitHub     : https://github.com/alexnerd85/EQueue
  */
 
-public class Admin implements Serializable, User, Available{
+public class Admin implements Serializable, EQueueUser, Available{
     private static final long serialVersionUID = 1L;
     
     private static AtomicLong id = new AtomicLong();        

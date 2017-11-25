@@ -57,7 +57,7 @@
                   if ( o.val().length > max || o.val().length < min ) {
                     o.addClass( "ui-state-error" );
                     updateTips( "Длина поля должна быть между " +
-                      min + " и " + max + " символами." );
+                    min + " и " + max + " символами." );
                     return false;
                   } else {
                     return true;
@@ -83,6 +83,27 @@
                         return true;
                     }
                 }
+                
+                function checkLogin(o, n){
+                    var isUnique;
+                    $.ajax({
+                        url: "admin",
+                        type: "POST",
+                        data: {action: "check-login", login: o.val()},
+                        success: function(data){
+                            if($.trim(data) === 'false'){
+                            o.addClass( "ui-state-error" );
+                            updateTips( n );
+                            isUnique = false;
+                        } else{
+                            isUnique = true;
+                        }
+                        },
+                        dataType: "text",
+                        async: false
+                    });                    
+                    return isUnique;                    
+                }
 
                 function addUser() {                    
                     var valid = true;
@@ -95,13 +116,14 @@
                     valid = valid && checkLength( password, "password", 5, 16 );
 
                     valid = valid && checkRegexp( login, /^([a-zA-Z])([0-9a-zA-Z_])+$/,"Логин должен начинаться с латинской буквы и может состоять из латинских букв, цифр и нижнего подчеркивания");
+                    valid = valid && checkLogin(login, "Данный логин уже зарегестрирован, выберите другой");
                     valid = valid && checkRole( role, "Выберите роль пользователя");
                     valid = valid && checkRegexp( sirname, /^([A-ZА-Я])([a-zа-я])+$/i, "Фамилия пользователя должна состоять только из букв и начинаться с заглавной буквы" );            
                     valid = valid && checkRegexp( name, /^([A-ZА-Я])([a-zа-я])+$/i, "Имя пользователя должно состоять только из букв и начинаться с заглавной буквы" );
                     valid = valid && checkRegexp( middlename, /^([A-ZА-Я])([a-zа-я])+$/i, "Отчество пользователя должно состоять только из букв и начинаться с заглавной буквы" );
                     valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Допустимые символы для пароля: a-z A-Z 0-9" );
 
-                    if ( valid ) {                      
+                    if ( valid ) { 
                         $.post("admin",{action:"add-user",
                                         userLogin:login.val(),
                                         userRole:role.val(),

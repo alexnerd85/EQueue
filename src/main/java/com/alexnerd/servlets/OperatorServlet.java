@@ -7,7 +7,6 @@ package com.alexnerd.servlets;
 
 import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.Operator;
-import com.alexnerd.data.users.User;
 import com.alexnerd.ticket.Ticket;
 import com.alexnerd.ticket.TicketStatus;
 import java.io.IOException;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- *   @Created on : 19.11.2017
+ *   @Created    : 19.11.2017
  *   @Author     : Popov Aleksey
  *   @Site       : alexnerd.com
  *   @Email      : alexnerd85@gmail.com
@@ -114,6 +113,10 @@ public class OperatorServlet extends HttpServlet {
                         operator.setTicket(ticket);
                         break;
                     case "repeat":
+                        if(operator.getTicket() != null){
+                            ticket = operator.getTicket();
+                            ticket.setStatus(TicketStatus.REPEAT);
+                        }
                         break;
                     case "skip":
                         if(operator.getTicket() != null){
