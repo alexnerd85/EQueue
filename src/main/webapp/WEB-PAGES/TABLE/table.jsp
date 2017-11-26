@@ -25,6 +25,7 @@
             });*/
             
             var users=[];
+            var sessionId;
             $(function(){
                window.setInterval(function(){
                    $.post("table",{action:"get-operators"},function(data){
@@ -35,30 +36,39 @@
                                 $.each(arr[i].split(','), function(index, val) {                            
                                     user[index] = val;
                                 });
-                                var include = false;
-                                for(var j = 0; j < users.length; j++){
-                                    if(user[0] === users[j][0]){
-                                        if(user[1] !== users[j][1]){
-                                            $('#windowNum'+user[0]).remove();
-                                            users.splice(j,1);
-                                        } else {
-                                            include = true;
+                                if($.type(sessionId) === "undefined"){sessionId = user[3];}
+                                else{
+                                    if(sessionId === user[3]){
+                                        var include = false;
+                                        for(var j = 0; j < users.length; j++){
+                                            if(user[0] === users[j][0]){
+                                                if(user[1] !== users[j][1]){
+                                                    $('#windowNum'+user[0]).remove();
+                                                    users.splice(j,1);
+                                                } else {
+                                                    include = true;
+                                                }
+                                                if(user[2] === "REPEAT"){
+                                                    $.post("table",{action: "change-ticket-status",
+                                                                    window: user[0],
+                                                                    ticket: user[1],
+                                                                    status: "INWORK"});
+                                                    $('#windowNum'+user[0]).remove();
+                                                    users.splice(j,1);
+                                                    include = false;
+                                                }
+                                            } 
+                                        }                                
+                                        if(include === false){
+                                            users.push(user);
+                                            $('#dinamic_content').prepend($('<div id=\"windowNum'+user[0]+'\" class="table-content"><div class="table-window">Окно № '+ user[0] +'</div><div class="table-ticket">'+ user[1] +'</div></div>'));
+                                            $('#windowNum'+user[0]).blink(3);
                                         }
-                                        if(user[2] === "REPEAT"){
-                                            $.post("table",{action: "change-ticket-status",
-                                                            window: user[0],
-                                                            ticket: user[1],
-                                                            status: "INWORK"});
-                                            $('#windowNum'+user[0]).remove();
-                                            users.splice(j,1);
-                                            include = false;
-                                        }
-                                    } 
-                                }                                
-                                if(include === false){
-                                    users.push(user);
-                                    $('#dinamic_content').prepend($('<div id=\"windowNum'+user[0]+'\" class="table-content"><div class="table-window">Окно № '+ user[0] +'</div><div class="table-ticket">'+ user[1] +'</div></div>'));
-                                    $('#windowNum'+user[0]).blink(3);
+                                    } else{
+                                        $('.table-content').each(function(index){
+                                            $(this).remove();
+                                        });
+                                    }
                                 }
                             }
                             for(var j = 0; j < users.length; j++){
@@ -78,6 +88,8 @@
                                     users.splice(j,1);
                                 }
                             }
+                            
+                            
                         }
                     });
                     $('.table-content').each(function(index){

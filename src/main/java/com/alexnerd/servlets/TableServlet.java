@@ -103,10 +103,10 @@ public class TableServlet extends HttpServlet {
                         Ticket ticket = operator.getTicket();
                         if(operator.isAvailable() && ticket != null)
                             out.print(operator.getNumWindow() +
-                                "," + ticket + "," + ticket.getStatus() + ";");
+                                "," + ticket + "," + ticket.getStatus() + "," +
+                                    request.getSession().getId() + ";");
                     }
-                }                
-                out.flush();
+                } 
             }
         }
         if(action != null && action.equals("change-ticket-status")){
