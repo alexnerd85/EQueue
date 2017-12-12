@@ -1,14 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 19.11.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.servlets;
 
-import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.Operator;
-import com.alexnerd.ticket.Ticket;
-import com.alexnerd.ticket.TicketStatus;
+import com.alexnerd.data.ticket.Ticket;
+import com.alexnerd.data.ticket.TicketStatus;
+import com.alexnerd.utils.db.EQueueDB;
+import com.alexnerd.utils.db.EQueueUserDB;
+import com.alexnerd.utils.db.TicketDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -19,14 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
 
 @WebServlet(name = "OperatorServlet", urlPatterns = {"/operator"})
 public class OperatorServlet extends HttpServlet {
@@ -94,51 +91,61 @@ public class OperatorServlet extends HttpServlet {
             operator = (Operator) session.getAttribute("user");
         } 
         
-        EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");        
+        //EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");        
         
         if(action != null){
-            if(!operator.isAvailable()){
+            if(!EQueueUserDB.isAvailable(operator)){
                 if(action.equals("begin")){
-                    operator.setAvailable(true);
+                    //operator.setAvailable(true);
+                    EQueueUserDB.setAvailable(operator, true);
                 }
             } else {
                 Ticket ticket = null;
                 switch (action) {
                     case "next":
-                        if(equeue.getQueueLength() > 0){
-                            ticket = equeue.getFirstTicket();
-                            ticket.setStatus(TicketStatus.INWORK);
-                            ticket.setActionDate(LocalDateTime.now());                            
+                        if(EQueueDB.getQueueLength() > 0){
+                            ticket = EQueueDB.getFirstTicket();
+                            //ticket.setStatus(TicketStatus.INWORK);
+                            TicketDB.setStatus(ticket, TicketStatus.INWORK);
+                            //ticket.setActionDate(LocalDateTime.now());  
+                            TicketDB.setActionDate(ticket, LocalDateTime.now());
                         }
-                        operator.setTicket(ticket);
+                        //operator.setTicket(ticket);
+                        EQueueUserDB.setTicket(operator, ticket);
                         break;
                     case "repeat":
-                        if(operator.getTicket() != null){
-                            ticket = operator.getTicket();
-                            ticket.setStatus(TicketStatus.REPEAT);
+                        if(EQueueUserDB.getTicket(operator) != null){
+                            ticket = EQueueUserDB.getTicket(operator);
+                            //ticket.setStatus(TicketStatus.REPEAT);
+                            TicketDB.setStatus(ticket, TicketStatus.REPEAT);
                         }
                         break;
                     case "skip":
-                        if(operator.getTicket() != null){
-                            ticket = operator.getTicket();
-                            ticket.setStatus(TicketStatus.MISSED);
-                            equeue.addTicket(ticket);
-                            operator.cancelTiket();
+                        if(EQueueUserDB.getTicket(operator) != null){
+                            ticket = EQueueUserDB.getTicket(operator);
+                            //ticket.setStatus(TicketStatus.MISSED);
+                            TicketDB.setStatus(ticket, TicketStatus.MISSED);
+                            EQueueDB.addTicket(ticket);
+                            //operator.cancelTiket();
+                            EQueueUserDB.cancelTicket(operator);
                         }                        
                         break;
                     case "cancel":
-                        if(operator.getTicket() != null){
-                            operator.cancelTiket();
+                        if(EQueueUserDB.getTicket(operator) != null){
+                            //operator.cancelTiket();
+                            EQueueUserDB.cancelTicket(operator);
                         }
                         break;
                     case "off":
-                        if(operator.getTicket() != null){
-                            operator.cancelTiket();
+                        if(EQueueUserDB.getTicket(operator) != null){
+                            //operator.cancelTiket();
+                            EQueueUserDB.cancelTicket(operator);
                         }
-                        operator.setAvailable(false);
+                        EQueueUserDB.setAvailable(operator, false);
+                        //operator.setAvailable(false);
                         break;
                     default:
-                        break;
+                        throw new ServletException("Unknown request");
                 }
             }
         }                

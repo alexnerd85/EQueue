@@ -1,12 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 19.11.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.servlets;
 
 import com.alexnerd.data.users.Admin;
-import com.alexnerd.data.EQueue;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -16,15 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.alexnerd.data.users.EQueueUser;
+import com.alexnerd.utils.db.EQueueDB;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
 
 public class LoginServlet extends HttpServlet {
         
@@ -40,24 +35,27 @@ public class LoginServlet extends HttpServlet {
         String url = "";
                 
         HttpSession session = request.getSession();
-        EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
+        //EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         
         String action = request.getParameter("action");
         if(action != null){
             switch(action){
                 case "check-config":
-                    System.out.println("*************************************** CHECK CONFIG NOT NULL");                    
-                    if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
+                    System.out.println("*************************************** CHECK CONFIG NOT NULL"); 
+                    System.out.println("*************************************** Properties " + EQueueDB.getProperties());
+                    //if (equeue.getProperties().getProperty("dbAdress").isEmpty()) {
+                    //if (EQueueDB.getProperties().getProperty("dbAdress").isEmpty()) {
+                    if (EQueueDB.getProperties() == null) {
                         try (PrintWriter out = response.getWriter()) {
                             out.println("true");
                             out.flush();
                         }
                     } else {
-                        System.out.println("*************************************** dbAdress " + equeue.getProperties().getProperty("dbAdress"));                
-                        System.out.println("*************************************** dbName " + equeue.getProperties().getProperty("dbName"));                
-                        System.out.println("*************************************** dbLogin " + equeue.getProperties().getProperty("dbLogin"));                
-                        System.out.println("*************************************** dbPassword " + equeue.getProperties().getProperty("dbPassword"));                
-                        System.out.println("*************************************** appLanguage " + equeue.getProperties().getProperty("appLanguage"));                
+                        System.out.println("*************************************** dbAdress " + EQueueDB.getProperties().getProperty("dbAdress"));                
+                        System.out.println("*************************************** dbName " + EQueueDB.getProperties().getProperty("dbName"));                
+                        System.out.println("*************************************** dbLogin " + EQueueDB.getProperties().getProperty("dbLogin"));                
+                        System.out.println("*************************************** dbPassword " + EQueueDB.getProperties().getProperty("dbPassword"));                
+                        System.out.println("*************************************** appLanguage " + EQueueDB.getProperties().getProperty("appLanguage"));                
                         
                     }
                     
@@ -72,7 +70,8 @@ public class LoginServlet extends HttpServlet {
                     
                 case "add-config":
                     System.out.println("********************************* ADD_CONFIG");
-                    Properties props = equeue.getProperties();
+                    //Properties props = equeue.getProperties();
+                    Properties props = new Properties();
                     props.setProperty(
                             "dbAdress", request.getParameter("dbAdress"));
                     props.setProperty(
@@ -83,8 +82,10 @@ public class LoginServlet extends HttpServlet {
                             "dbPassword", request.getParameter("dbPassword"));
                     props.setProperty(
                             "appLanguage", request.getParameter("appLanguage"));
-                    equeue.setProperties(props);
-
+                    //equeue.setProperties(props);
+                    EQueueDB.setProperties(props);
+                    System.out.println("************************** add-config getProperties " + EQueueDB.getProperties());
+                    /*
                     equeue.addUser(new Admin(
                             request.getParameter("adminLogin"),
                             request.getParameter("adminPassword"),
@@ -92,6 +93,16 @@ public class LoginServlet extends HttpServlet {
                             "",
                             ""
                     ));
+                    */
+                    
+                    EQueueDB.addUser(new Admin(
+                            request.getParameter("adminLogin"),
+                            request.getParameter("adminPassword"),
+                            "",
+                            "",
+                            ""
+                    ));
+                    
                     break;
                     
                 case "login":
@@ -101,7 +112,8 @@ public class LoginServlet extends HttpServlet {
                         //redirect to error page
                         throw new ServletException("Login and Password fields must not be empty!");
                     } else {
-                        EQueueUser user = equeue.getUserByLogin(username);
+                        //EQueueUser user = equeue.getUserByLogin(username);
+                        EQueueUser user = EQueueDB.getUserByLogin(username);
                         if (user != null && user.getPassword().equals(password)) {
                             session.setAttribute("user", user);
                             url = "/EQueue/equeuemain";
@@ -115,8 +127,9 @@ public class LoginServlet extends HttpServlet {
                 default:
                     throw new ServletException("Unknown request");
             }
-        }     
-        response.sendRedirect(url);
+        }
+        if(!response.isCommitted())
+            response.sendRedirect(url);
     }
     
     /**

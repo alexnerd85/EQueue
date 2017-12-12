@@ -9,6 +9,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -178,7 +179,7 @@
                     <label for="role">Роль</label>
                     <select name="role" id="role">
                         <option disabled selected="selected">Выберите роль</option>
-                        <c:forEach var="role" items="${equeue.userRoles}">
+                        <c:forEach var="role" items="${EQueueDB:getUserRoles()}">
                             <option value="${role}">${role}</option>      
                         </c:forEach>
                     </select>

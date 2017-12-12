@@ -9,6 +9,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,10 +40,10 @@
         </div>
         <div class="flex-item">
             <form  action="equeuemain" method="post">
-                <c:forEach var="user" items="${equeue.users}">
+                <c:forEach var="user" items="${EQueueDB:getUsers()}">
                     <c:if test="${user.userRole eq 'OPERATOR'}">
                         <br>
-                            <p><button type="submit" class="button" name="select_operator" value="${user.userId}">${user.userId}</button></p>
+                            <p><button type="submit" class="button" name="select_operator" value="${user.userId}">${user.login}</button></p>
                         <br>
                     </c:if>
                 </c:forEach>

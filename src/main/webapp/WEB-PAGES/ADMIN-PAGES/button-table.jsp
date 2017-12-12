@@ -9,6 +9,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     $( ".delete-button" ).click(function() {
@@ -40,7 +41,7 @@
         <th>Количество талонов</th>
         <th>Статус</th>
     </tr>
-    <c:forEach var="button" items="${equeue.terminalButtons}">
+    <c:forEach var="button" items="${EQueueDB:getTerminalButtons()}">
         <tr>
             <td>
                 <input name="name" value="<c:out value='${button.name}'/>">

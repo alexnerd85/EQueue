@@ -9,6 +9,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     $( ".delete-user" ).click(function() {
@@ -49,7 +50,7 @@
         <th>Пароль</th>
         <th>Номер окна</th>
     </tr>            
-    <c:forEach var="user" items="${equeue.users}">
+    <c:forEach var="user" items="${EQueueDB:getUsers()}">
         <tr>
             <td>${user.login}</td>
             <td name="userRole">${user.userRole}</td>

@@ -1,8 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 19.11.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.servlets;
 
 import java.io.IOException;
@@ -13,14 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
 
 @WebServlet(name = "WindowServlet", urlPatterns = {"/window"})
 public class WindowServlet extends HttpServlet {

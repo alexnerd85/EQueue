@@ -1,36 +1,52 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 12.06.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.data.users;
 
 import com.alexnerd.data.Available;
 import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
-/**
- *
- *   @Created    : 24.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
-
-public class User implements EQueueUser, Serializable, Available {
+@Entity
+@Table(name = "USERAPP")
+public class User extends EQueueUser implements Serializable, Available {
     private static final long serialVersionUID = 1L;    
     
-    private static AtomicLong id = new AtomicLong();
-        
-    private boolean available;
-    private long userId;
+    //private static AtomicLong id = new AtomicLong();
+      
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //private long userId;
+    
+    @Enumerated(EnumType.ORDINAL)
     private final UserRole userRole;
+    
+    private boolean available;
     private String login;
     private String password;
     private String name;
     private String sirname;
     private String middlename;
+    
+    public User(){
+        this.userRole = UserRole.USER;
+        
+        this.login = null;
+        this.password = null;
+        this.name = null;
+        this.sirname = null;
+        this.middlename = null;
+        
+        //this.userId = id.incrementAndGet();
+    }
     
     public User(String login, String password, String sirname, String name, 
             String middlename){
@@ -41,7 +57,7 @@ public class User implements EQueueUser, Serializable, Available {
         this.sirname = sirname;
         this.middlename = middlename;
         
-        this.userId = id.incrementAndGet();
+        //this.userId = id.incrementAndGet();
     }
 
     @Override

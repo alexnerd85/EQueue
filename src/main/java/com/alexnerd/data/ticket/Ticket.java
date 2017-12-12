@@ -1,43 +1,87 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 19.11.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
-package com.alexnerd.ticket;
+
+package com.alexnerd.data.ticket;
 
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
-
+@Entity
 public class Ticket implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private static AtomicLong id = new AtomicLong();
-    
+    //private static AtomicLong id = new AtomicLong();
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "TICKETID")
     private long ticketId;
-    private int number;  // номер талона
-    private String name;    // название талона
-    private TicketPriority priority;    // приоритет талона (перечисления)
-    private TicketStatus status;      // статус талона (перечисления)
-    private LocalDateTime pickTime;     //время взятия талона
-    private LocalDateTime actionTime;   //время обработки талона оператором
+    
+    //время обработки талона оператором
+    @Column(name = "ACTIONTIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime actionTime;   
+    
+    @Size(max = 255)
+    @Column(name = "NAME")
+    private String name;
+    
+    @Column(name = "NUMBER")
+    private int number;
+    
+    //время взятия талона
+    @Column(name = "PICKTIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime pickTime;
+    
+    // приоритет талона (перечисления)
+    @Column(name = "PRIORITY")
+    @Enumerated(EnumType.ORDINAL)
+    private TicketPriority priority;    
+    
+    // статус талона (перечисления)
+    @Column(name = "STATUS")
+    @Enumerated(EnumType.ORDINAL)
+    private TicketStatus status;      
+    
+    /*
+    @JoinTable(name = "EQUEUE_TICKET", joinColumns = {
+        @JoinColumn(name = "QUEUE_TICKETID", referencedColumnName = "TICKETID")}, inverseJoinColumns = {
+        @JoinColumn(name = "EQUEUE_ID", referencedColumnName = "ID")})
+    @ManyToOne
+    private EQueue eQueue;
+    */
+    
+    public Ticket(){
+        this.number = 0;
+        this.name = null;
+        this.priority = null;
+        this.status = null;
+    }
     
     public Ticket(int number, String name, TicketPriority priority, TicketStatus status){
         this.number = number;
         this.name = name;
         this.priority = priority;
         this.status = status;
-        ticketId = id.incrementAndGet();
+        
+        //ticketId = id.incrementAndGet();
         /*this.number = 1;
         this.priority = TicketPriority.NORMAL;
         this.status = TicketStatus.INQUEUE;*/
@@ -102,6 +146,16 @@ public class Ticket implements Serializable {
         return pickTime;
     }
     
+    /*
+    @XmlTransient
+    public EQueue getEQueue() {
+        return eQueue;
+    }
+
+    public void setEQueue(EQueue eQueue) {
+        this.eQueue = eQueue;
+    }
+    */
     /*@Override
     public String toString(){
         return getName() + getNumber();
@@ -148,7 +202,6 @@ public class Ticket implements Serializable {
         hash = 89 * hash + Objects.hashCode(this.status);
         return hash;
     }
-    
-    
+
 }
 

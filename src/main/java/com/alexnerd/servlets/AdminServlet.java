@@ -1,11 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 12.06.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.servlets;
 
-import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.Operator;
 import com.alexnerd.data.TerminalButton;
 import com.alexnerd.data.users.Admin;
@@ -17,18 +19,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import com.alexnerd.data.users.EQueueUser;
 import com.alexnerd.data.users.User;
+import com.alexnerd.utils.db.EQueueDB;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
 
 @WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
 public class AdminServlet extends HttpServlet {
@@ -88,7 +82,7 @@ public class AdminServlet extends HttpServlet {
         //processRequest(request, response);
         //HttpSession session = request.getSession();
         //EQueue equeue = (EQueue) request.getAttribute("equeue");
-        EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
+        //EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         String url = "/WEB-PAGES/admin.jsp";
         
         String action = request.getParameter("action");       
@@ -102,23 +96,26 @@ public class AdminServlet extends HttpServlet {
                 String password = request.getParameter("userPassword");       
                 switch(userRole){
                     case ADMIN:
-                        equeue.addUser(new Admin(login, password, sirname, name, middlename));
+                        EQueueDB.addUser(new Admin(login, password, sirname, name, middlename));
+                        //EQueueDB.merge(null);
                         break;
                     case USER:
-                        equeue.addUser(new User(login, password, sirname, name, middlename));
+                        EQueueDB.addUser(new User(login, password, sirname, name, middlename));
+                        //EQueueDB.merge(null);
                         break;
                     case OPERATOR:
-                        equeue.addUser(new Operator(login, password, sirname, name, middlename, false));
+                        EQueueDB.addUser(new Operator(login, password, sirname, name, middlename, false));
+                        //EQueueDB.merge(null);
                         break;
                     default:
                         throw new IllegalArgumentException("Неизвестная роль");                
                 }               
             }  
             if(action.equals("delete-user")){
-                equeue.deleteUser(Long.parseLong(request.getParameter("userId")));
+                EQueueDB.deleteUser(Long.parseLong(request.getParameter("userId")));
             }  
             if(action.equals("save-user")){
-                EQueueUser user = equeue.getUserByIdAndRole(
+                EQueueUser user = EQueueDB.getUserByIdAndRole(
                         Long.parseLong(request.getParameter("userId")),
                         UserRole.valueOf(request.getParameter("userRole")));
                 user.setName(request.getParameter("userName"));
@@ -130,7 +127,7 @@ public class AdminServlet extends HttpServlet {
                 }                
             }
             if(action.equals("add-button")){
-                equeue.addTerminalButton(new TerminalButton(
+                EQueueDB.addTerminalButton(new TerminalButton(
                                     request.getParameter("buttonName"),
                                     request.getParameter("buttonPrefix"),
                                     Integer.valueOf(request.getParameter("numTickets")),
@@ -138,18 +135,18 @@ public class AdminServlet extends HttpServlet {
                                 ));
             }
             if(action.equals("save-button")){
-                TerminalButton button = equeue.getTerminalButtonById(Long.parseLong(request.getParameter("buttonId")));
+                TerminalButton button = EQueueDB.getTerminalButtonById(Long.parseLong(request.getParameter("buttonId")));
                 button.setName(request.getParameter("name"));
                 button.setPrefix(request.getParameter("prefix"));
                 button.setNumTickets(Integer.valueOf(request.getParameter("numTickets")));
                 button.setAvailable(Boolean.valueOf(request.getParameter("status")));
             }
             if(action.equals("delete-button")){
-                equeue.deleteTerminalButton(Long.parseLong(request.getParameter("buttonId")));
+                EQueueDB.deleteTerminalButton(Long.parseLong(request.getParameter("buttonId")));
             }
             if(action.equals("check-login")){                
                 try (PrintWriter out = response.getWriter()) {
-                    out.println(equeue.isUniqueLogin(request.getParameter("login")));
+                    out.println(EQueueDB.isUniqueLogin(request.getParameter("login")));
                     out.flush();
                 }
             }
@@ -159,7 +156,10 @@ public class AdminServlet extends HttpServlet {
             
         }
         
-       getServletContext().getRequestDispatcher(url).forward(request, response);
+        if(!response.isCommitted())
+            getServletContext().getRequestDispatcher(url).forward(request, response);;
+        
+       //getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 
     /**

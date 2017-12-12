@@ -9,6 +9,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,31 +21,31 @@
             <div class="text-field">    
                 Название организации:               
             </div>  
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${equeue.companyName}'/>">
+            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
         </div>        
         <div class="main-inner">
             <div class="text-field">    
                 Адрес базы данных:               
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${equeue.companyName}'/>">
+            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
         </div>
         <div class="main-inner">
             <div class="text-field">    
                 Имя базы:              
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${equeue.companyName}'/>">
+            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
         </div>
         <div class="main-inner">
             <div class="text-field">    
                 Имя пользователя:                
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${equeue.companyName}'/>">
+            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
         </div>
         <div class="main-inner">
             <div class="text-field">    
                 Пароль:              
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${equeue.companyName}'/>">
+            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
         </div>
         <div class="footer-inner">
             <div class="footer-button">    

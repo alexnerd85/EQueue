@@ -9,6 +9,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
+<%@taglib prefix="EQueueUserDB" uri="/tlds/EQueueUserDB.tld"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,13 +21,13 @@
     </head>
     <body>
         <div class="header">
-            <h1>Окно № ${empty sessionScope.hiddenUser ? sessionScope.user.numWindow : sessionScope.hiddenUser.numWindow}</h1>
+            <h1>Окно № ${empty sessionScope.hiddenUser ? EQueueUserDB:getNumWindow(sessionScope.user) :EQueueUserDB:getNumWindow(sessionScope.hiddenUser)}</h1>
         </div>
         <div class="main">
             <div class="ticket">
                 <c:choose>
-                    <c:when test="${empty sessionScope.hiddenUser ? sessionScope.user.available : sessionScope.hiddenUser.available}">
-                        Талон №<span style="color: green;">${empty sessionScope.hiddenUser ? sessionScope.user.ticket : sessionScope.hiddenUser.ticket}</span>
+                    <c:when test="${empty sessionScope.hiddenUser ?  EQueueUserDB:isAvailable(sessionScope.user) : EQueueUserDB:isAvailable(sessionScope.hiddenUser)}">
+                        Талон №<span style="color: green;">${empty sessionScope.hiddenUser ? EQueueUserDB:getTicket(sessionScope.user) : EQueueUserDB:getTicket(sessionScope.hiddenUser)}</span>
                     </c:when>
                     <c:otherwise>
                         <span style="color:red; font-size: 60%;">ОКНО НЕ АКТИВНО</span>
@@ -46,7 +48,7 @@
         <div class="footer">
             Очередь:
             <br/>
-            Общее количество человек: ${equeue.getQueueLength()}
+            Общее количество человек: ${EQueueDB:getQueueLength()}
         </div>       
     </body>
 </html>

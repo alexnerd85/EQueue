@@ -9,6 +9,7 @@
 
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     $( document ).ready(function() {
@@ -30,7 +31,7 @@
     <body>        
       <div class="flex-container">
         <div class="flex-item">
-            <p><h1>${equeue.companyName}</h1></p>
+            <p><h1>${EQueueDB:getCompanyName()}</h1></p>
             <hr class="hr-style">
         </div>
         <div id="button-block" class="flex-item">           

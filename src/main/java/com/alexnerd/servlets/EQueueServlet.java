@@ -1,11 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 19.11.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.servlets;
 
-import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.UserRole;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,15 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.alexnerd.data.users.EQueueUser;
+import com.alexnerd.utils.db.EQueueDB;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
 
 @WebServlet(name = "EQueueServlet", urlPatterns = {"/equeuemain"})
 public class EQueueServlet extends HttpServlet {  
@@ -85,7 +80,7 @@ public class EQueueServlet extends HttpServlet {
         
         String url = "/WEB-PAGES/equeuemain.jsp";
         //System.out.println("************************ REAL PATH " + this.getServletContext().getRealPath("/WEB-PAGES/app-config.properties"));
-        EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
+        //EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         
         HttpSession session = request.getSession();    
         
@@ -128,14 +123,14 @@ public class EQueueServlet extends HttpServlet {
         }
         String selectOperator = request.getParameter("select_operator");
         if(selectOperator != null){
-            session.setAttribute("hiddenUser", equeue.getUserByIdAndRole(
+            session.setAttribute("hiddenUser", EQueueDB.getUserByIdAndRole(
                     Long.valueOf(selectOperator), UserRole.OPERATOR));
             url="/operator";
         }
         
         String selectWindow = request.getParameter("select_window");
         if(selectWindow != null){
-            session.setAttribute("hiddenUser", equeue.getUserByIdAndRole(
+            session.setAttribute("hiddenUser", EQueueDB.getUserByIdAndRole(
                     Long.valueOf(selectWindow), UserRole.OPERATOR));
             url="/WEB-PAGES/WINDOW/window.jsp";
         }

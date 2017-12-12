@@ -9,6 +9,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <link type="text/css" rel="stylesheet" href="styles/main.css">
 <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
@@ -43,7 +44,7 @@
 </script>
 <!DOCTYPE html>
 <form action="terminal" method="post">
-    <c:forEach var="item" items="${equeue.terminalButtons}">
+    <c:forEach var="item" items="${EQueueDB:getTerminalButtons()}">
         <c:if test="${item.available}">
             <br>
             <button type="submit" class="button" name="btn" value="${item.buttonId}">${item.name}</button>

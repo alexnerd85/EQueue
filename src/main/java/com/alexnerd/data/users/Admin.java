@@ -1,38 +1,50 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 12.06.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.data.users;
 
 import com.alexnerd.data.Available;
-import com.alexnerd.data.users.UserRole;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
-import com.alexnerd.data.users.EQueueUser;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
-
-public class Admin implements Serializable, EQueueUser, Available{
+@Entity
+@Table(name = "ADMINAPP")
+public class Admin extends EQueueUser implements Serializable, Available{
     private static final long serialVersionUID = 1L;
     
-    private static AtomicLong id = new AtomicLong();        
+    //private static AtomicLong id = new AtomicLong();        
     
-    private final long userId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //private long userId;
+    
+    @Enumerated(EnumType.ORDINAL)
     private final UserRole userRole;
+    
     private String login;
     private String password;
     private String name;
     private String sirname;
     private String middlename;
+    
+    public Admin(){
+        this.userRole = UserRole.ADMIN;
+        
+        this.login = null;
+        this.password = null;
+        this.name = null;
+        this.sirname = null;
+        this.middlename = null;
+    }
     
     public Admin(String login, String password, String sirname, String name, 
             String middlename){
@@ -43,7 +55,7 @@ public class Admin implements Serializable, EQueueUser, Available{
         this.sirname = sirname;
         this.middlename = middlename;
         
-        this.userId = id.incrementAndGet();
+        //this.userId = id.incrementAndGet();
     }
 
     @Override
@@ -139,8 +151,4 @@ public class Admin implements Serializable, EQueueUser, Available{
         }
         return true;
     }
-    
-    
-
-    
 }

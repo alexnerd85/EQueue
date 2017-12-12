@@ -1,16 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 19.11.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.servlets;
 
-import com.alexnerd.data.EQueue;
 import com.alexnerd.data.users.EQueueUser;
 import com.alexnerd.data.users.Operator;
 import com.alexnerd.data.users.UserRole;
-import com.alexnerd.ticket.Ticket;
-import com.alexnerd.ticket.TicketStatus;
+import com.alexnerd.data.ticket.Ticket;
+import com.alexnerd.data.ticket.TicketStatus;
+import com.alexnerd.utils.db.EQueueDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,16 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
 
 @WebServlet(name = "TableServlet", urlPatterns = {"/table"})
 public class TableServlet extends HttpServlet {
@@ -87,14 +81,14 @@ public class TableServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         //HttpSession session = request.getSession();
-        EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
+        //EQueue equeue = (EQueue) getServletContext().getAttribute("equeue");
         String url = "/WEB-PAGES/table.jsp";
         
         String action = request.getParameter("action");
         if(action != null && action.equals("get-operators")){
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
-                List<EQueueUser> users = equeue.getUsers();
+                List<EQueueUser> users = EQueueDB.getUsers();
                 System.out.println("1");
                 for(EQueueUser user : users){
                     System.out.println("2");
@@ -113,7 +107,7 @@ public class TableServlet extends HttpServlet {
             int numWindow = Integer.valueOf(request.getParameter("window"));
             String ticket = request.getParameter("ticket");
             TicketStatus status = TicketStatus.valueOf(request.getParameter("status"));
-            List<EQueueUser> users = equeue.getUsers();
+            List<EQueueUser> users = EQueueDB.getUsers();
             for(EQueueUser user : users){
                 if(user.getUserRole() == UserRole.OPERATOR){
                     Operator operator = (Operator) user;

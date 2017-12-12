@@ -8,6 +8,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
+<%@taglib prefix="EQueueUserDB" uri="/tlds/EQueueUserDB.tld"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,11 +24,11 @@
                 }, 1000);
             });
         </script>
-        <title>Окно № ${empty sessionScope.hiddenUser ? sessionScope.user.numWindow : sessionScope.hiddenUser.numWindow}</title>
+        <title>Окно № ${empty sessionScope.hiddenUser ? EQueueUserDB:getNumWindow(sessionScope.user) :EQueueUserDB:getNumWindow(sessionScope.hiddenUser)}</title>
     </head>
     <body>
         <div class="header">
-            Окно № ${empty sessionScope.hiddenUser ? sessionScope.user.numWindow : sessionScope.hiddenUser.numWindow}
+            Окно № ${empty sessionScope.hiddenUser ? EQueueUserDB:getNumWindow(sessionScope.user) : EQueueUserDB:getNumWindow(sessionScope.hiddenUser)}
         </div>
         <hr>
         <div class="main">
@@ -34,7 +36,7 @@
         </div>
         <hr>
         <div class="footer">
-            ${equeue.companyName}            
+            ${EQueueDB:getCompanyName()}            
         </div>
     </body>
 </html>

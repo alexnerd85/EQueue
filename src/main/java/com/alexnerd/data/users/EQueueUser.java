@@ -1,38 +1,53 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 12.06.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.data.users;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
-
-public interface EQueueUser {    
-    public UserRole getUserRole();
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class EQueueUser implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "USERID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USERID")
+    protected long userId;
+    
+    //protected String login;
+    
+    public abstract UserRole getUserRole();
     
     //public void setUserId(int userId);
-    public long getUserId();
+    public abstract long getUserId();
       
-    public void setLogin(String login);
-    public String getLogin();
+    public abstract void setLogin(String login);
+    public abstract String getLogin();
     
-    public void setPassword(String password);
-    public String getPassword();
+    public abstract void setPassword(String password);
+    public abstract String getPassword();
     
-    public void setSirname(String sirname);
-    public String getSirname();
+    public abstract void setSirname(String sirname);
+    public abstract String getSirname();
     
-    public void setName(String name);
-    public String getName();
+    public abstract void setName(String name);
+    public abstract String getName();
     
-    public void setMiddlename(String middlename);
-    public String getMiddlename();
+    public abstract void setMiddlename(String middlename);
+    public abstract String getMiddlename();
 }

@@ -1,42 +1,46 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *   Created on : 12.06.2017, 21:06:20
+ *   Author     : Popov Aleksey
+ *   Site       : alexnerd.com
+ *   Email      : alexnerd85@gmail.com
+ *   GitHub     : https://github.com/alexnerd85/EQueue
  */
+
 package com.alexnerd.data.users;
 
 import com.alexnerd.data.Available;
-import com.alexnerd.data.users.UserRole;
-import com.alexnerd.ticket.Ticket;
+import com.alexnerd.data.ticket.Ticket;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
-/**
- *
- *   @Created    : 19.11.2017
- *   @Author     : Popov Aleksey
- *   @Site       : alexnerd.com
- *   @Email      : alexnerd85@gmail.com
- *   @GitHub     : https://github.com/alexnerd85/EQueue
- */
-
-public class Operator implements EQueueUser, Serializable, Available {
+@Entity
+@Table(name = "OperatorApp")
+public class Operator extends EQueueUser implements Serializable, Available {
     private static final long serialVersionUID = 1L;    
     
-    private static AtomicLong id = new AtomicLong();
+    //private static AtomicLong id = new AtomicLong();
     private static AtomicInteger window = new AtomicInteger();
-        
-    private boolean available;
-    private long userId;
-    private int numWindow;
+
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //private long userId;
+    
+    @Enumerated(EnumType.ORDINAL)
     private UserRole userRole;
+    
+    private Ticket ticket;
+    
+    private boolean available;
+    private int numWindow;
     private String login;
     private String password;
     private String name;
     private String sirname;
     private String middlename;
-    private Ticket ticket;
     
     /*public Operator(int numWindow){        
         this(false, numWindow);
@@ -47,6 +51,22 @@ public class Operator implements EQueueUser, Serializable, Available {
         this.numWindow = numWindow;
         this.userRole = UserRole.OPERATOR;
     }*/
+    
+    public Operator(){
+        this.userRole = UserRole.OPERATOR;
+        
+        this.login = null;
+        this.password = null;
+        this.name = null;
+        this.sirname = null;
+        this.middlename = null;
+        this.available = false;
+        this.numWindow = 0;
+        
+        
+        //this.userId = id.incrementAndGet();
+        //this.numWindow = window.incrementAndGet();
+    }
     
     public Operator(String login, String password, boolean available, int numWindow){
          this(login, password, "", "", "", available);
@@ -62,7 +82,7 @@ public class Operator implements EQueueUser, Serializable, Available {
         this.available = available;
         this.userRole = UserRole.OPERATOR;
         
-        this.userId = id.incrementAndGet();
+        //this.userId = id.incrementAndGet();
         this.numWindow = window.incrementAndGet();
     }
     

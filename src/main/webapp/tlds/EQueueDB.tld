@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+  <!-- A validator verifies that the tags are used correctly at JSP
+          translation time. Validator entries look like this: 
+       <validator>
+           <validator-class>com.mycompany.TagLibValidator</validator-class>
+           <init-param>
+              <param-name>parameter</param-name>
+              <param-value>value</param-value>
+           </init-param>
+       </validator>
+    -->
+  <!-- A tag library can register Servlet Context event listeners in
+         case it needs to react to such events. Listener entries look
+         like this: 
+      <listener>
+          <listener-class>com.mycompany.TagLibListener</listener-class> 
+      </listener>
+    -->
+    <display-name>EQueueDB</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>EQueueDB</short-name>
+    <uri>/tlds/EQueueDB</uri>
+    
+    <function>
+        <name>getUsers</name>
+        <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
+        <function-signature>java.util.List getUsers()</function-signature>
+    </function>
+    
+    <function>
+        <name>getTerminalButtons</name>
+        <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
+        <function-signature>java.util.List getTerminalButtons()</function-signature>
+    </function>
+    
+    <function>
+        <name>getCompanyName</name>
+        <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
+        <function-signature>java.lang.String getCompanyName()</function-signature>
+    </function>
+    
+    <function>
+        <name>getUserRoles</name>
+        <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
+        <function-signature>com.alexnerd.data.users.UserRole getUserRoles()</function-signature>
+    </function>
+    
+    <function>
+        <name>getQueueLength</name>
+        <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
+        <function-signature>int getQueueLength()</function-signature>
+    </function>    
+   
+</taglib>

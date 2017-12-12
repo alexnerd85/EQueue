@@ -8,7 +8,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -137,7 +138,7 @@
     </head>
     <body>
         <div class="table-main">
-            <header class="table-company">${equeue.companyName}</header>
+            <header class="table-company">${EQueueDB:getCompanyName()}</header>
             <hr/>
             <div class="table-header">
                 <div class="header-window">Окно</div>
