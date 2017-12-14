@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alexnerd.data.users.EQueueUser;
 import com.alexnerd.data.users.User;
 import com.alexnerd.utils.db.EQueueDB;
+import java.util.Properties;
 
 
 @WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
@@ -150,10 +151,20 @@ public class AdminServlet extends HttpServlet {
                     out.flush();
                 }
             }
-              
-                
-            
-            
+            if(action.equals("save-properties")){
+                EQueueDB.setCompanyName(request.getParameter("companyName"));
+                Properties props = new Properties();
+                System.out.println("1");
+                props.setProperty("dbAdress", request.getParameter("dbAdress"));
+                System.out.println("2");
+                props.setProperty("dbName", request.getParameter("dbName"));
+                System.out.println("3");
+                props.setProperty("dbLogin", request.getParameter("dbLogin"));
+                System.out.println("4");
+                props.setProperty("dbPassword", request.getParameter("dbPassword"));
+                System.out.println("5");
+                EQueueDB.setProperties(props);
+            }
         }
         
         if(!response.isCommitted())

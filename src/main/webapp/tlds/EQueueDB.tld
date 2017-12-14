@@ -50,6 +50,12 @@
         <name>getQueueLength</name>
         <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
         <function-signature>int getQueueLength()</function-signature>
+    </function>
+    
+    <function>
+        <name>getProperties</name>
+        <function-class>com.alexnerd.utils.db.EQueueDB</function-class>
+        <function-signature>java.util.Properties getProperties()</function-signature>
     </function>    
    
 </taglib>

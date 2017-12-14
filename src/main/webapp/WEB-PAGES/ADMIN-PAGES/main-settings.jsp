@@ -10,6 +10,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="EQueueDB" uri="/tlds/EQueueDB.tld"%>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $(".admin-pages-button").click(function(){
+        $.post("admin",{
+            action: "save-properties",
+            companyName: $("#companyName").val(),
+            dbAdress: $("#dbAdress").val(),
+            dbName: $("#dbName").val(),
+            dbLogin: $("#dbLogin").val(),
+            dbPassword: $("#dbPassword").val()
+        });
+    });
+</script>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,35 +34,35 @@
             <div class="text-field">    
                 Название организации:               
             </div>  
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
+            <input id="companyName" class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
         </div>        
         <div class="main-inner">
             <div class="text-field">    
                 Адрес базы данных:               
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
+            <input id="dbAdress" class="admin-input" name="dbAdress" type="text" value="<c:out value='${EQueueDB:getProperties().getProperty("dbAdress")}'/>">
         </div>
         <div class="main-inner">
             <div class="text-field">    
                 Имя базы:              
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
+            <input id="dbName" class="admin-input" name="dbName" type="text" value="<c:out value='${EQueueDB:getProperties().getProperty("dbName")}'/>">
         </div>
         <div class="main-inner">
             <div class="text-field">    
                 Имя пользователя:                
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
+            <input id="dbLogin" class="admin-input" name="dbLogin" type="text" value="<c:out value='${EQueueDB:getProperties().getProperty("dbLogin")}'/>">
         </div>
         <div class="main-inner">
             <div class="text-field">    
                 Пароль:              
             </div> 
-            <input class="admin-input" name="companyName" type="text" value="<c:out value='${EQueueDB:getCompanyName()}'/>">
+            <input id="dbPassword" class="admin-input" name="dbPassword" type="text" value="<c:out value='${EQueueDB:getProperties().getProperty("dbPassword")}'/>">
         </div>
         <div class="footer-inner">
             <div class="footer-button">    
-                <button class="admin-pages-button">Сохранить</button>
+                <button class="admin-pages-button" name="save-properties">Сохранить</button>
             </div>
         </div>
     </body>
