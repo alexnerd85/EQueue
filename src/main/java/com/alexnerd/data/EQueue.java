@@ -19,6 +19,10 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.alexnerd.data.users.EQueueUser;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -85,6 +89,9 @@ public class EQueue implements Serializable{
     @OneToMany(fetch=EAGER, cascade=CascadeType.ALL)
     private List<TerminalButton> terminalButtons;
     
+    @OneToMany(fetch=EAGER, cascade=CascadeType.ALL)
+    private Set<RequestLog> requestLog;
+    
     /*
     public static EQueue getInstance(){
         if(instance == null){
@@ -103,7 +110,8 @@ public class EQueue implements Serializable{
         queue = new  CopyOnWriteArrayList();
         //queue = new ConcurrentLinkedQueue();
         users = new CopyOnWriteArrayList();
-        terminalButtons = new CopyOnWriteArrayList();        
+        terminalButtons = new CopyOnWriteArrayList();
+        requestLog = new ConcurrentSkipListSet();
         this.resourceName = "config.properties";
         //this.properties = initProperties();
         System.out.println("Constructor " + ++i);
@@ -125,6 +133,18 @@ public class EQueue implements Serializable{
         this.companyName = companyName;
     }
     
+    
+    // Working with Request Log block
+    
+    public boolean addLogEntry(RequestLog log){
+        return requestLog.add(log);
+    }
+    
+    public boolean removeLogEntry(RequestLog log){
+        return requestLog.remove(log);
+    }
+    
+    // End block
     
     // Working with terminal buttons block
     

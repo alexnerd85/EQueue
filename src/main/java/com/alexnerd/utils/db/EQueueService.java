@@ -9,6 +9,7 @@
 package com.alexnerd.utils.db;
 
 import com.alexnerd.data.EQueue;
+import com.alexnerd.data.RequestLog;
 import com.alexnerd.data.TerminalButton;
 import com.alexnerd.data.ticket.Ticket;
 import com.alexnerd.data.users.EQueueUser;
@@ -41,6 +42,10 @@ public class EQueueService {
     
     public Ticket getTicket(long id){
         return em.find(Ticket.class, id);
+    }
+    
+    public RequestLog getRequestLog(long id){
+        return em.find(RequestLog.class, id);
     }
     
 }

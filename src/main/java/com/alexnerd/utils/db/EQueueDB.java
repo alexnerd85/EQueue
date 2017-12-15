@@ -9,6 +9,7 @@
 package com.alexnerd.utils.db;
 
 import com.alexnerd.data.EQueue;
+import com.alexnerd.data.RequestLog;
 import com.alexnerd.data.TerminalButton;
 import com.alexnerd.data.users.EQueueUser;
 import com.alexnerd.data.users.UserRole;
@@ -428,6 +429,40 @@ public class EQueueDB {
         System.out.println("************************** EQueueDB getQueueTickets " + arr);
         em.close();
         return arr;
+    }
+    
+    public static void addLogEntry(RequestLog log){
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        EQueueService equeueService = new EQueueService(em);
+        try {
+            trans.begin();
+            EQueue equeue = equeueService.createEQueue();
+            equeue.addLogEntry(log);
+            trans.commit();
+        } catch (Exception ex) {
+            System.out.println("************************** EXCEPTION EQueueDB addLogEntry " + ex.getMessage());
+            trans.rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public static void removeLogEntry(RequestLog log){
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        EQueueService equeueService = new EQueueService(em);
+        try {
+            trans.begin();
+            EQueue equeue = equeueService.createEQueue();
+            equeue.removeLogEntry(log);
+            trans.commit();
+        } catch (Exception ex) {
+            System.out.println("************************** EXCEPTION EQueueDB removeLogEntry " + ex.getMessage());
+            trans.rollback();
+        } finally {
+            em.close();
+        }
     }
 
 }
