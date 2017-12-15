@@ -160,11 +160,12 @@ public class EQueue implements Serializable{
     }
     
     public synchronized TerminalButton getTerminalButton(TerminalButton button){
-        int i = terminalButtons.indexOf(button);
+        return terminalButtons.stream().filter(button::equals).findAny().orElse(null);
+        /*int i = terminalButtons.indexOf(button);
         if(i != -1)
             return terminalButtons.get(i);
         else
-            return null;
+            return null;*/
     }
     
     public synchronized TerminalButton getTerminalButton(int number){        
@@ -185,14 +186,15 @@ public class EQueue implements Serializable{
     }
     
     public synchronized boolean deleteTerminalButton(long buttonId){
-        boolean isDelete = false;
+        return terminalButtons.removeIf(s -> s.getButtonId() == buttonId);
+        /*boolean isDelete = false;
         for(TerminalButton button : terminalButtons){
             if(button.getButtonId() == buttonId){
                 isDelete = terminalButtons.remove(button);
                 break;
             }           
         }
-        return isDelete;
+        return isDelete;*/
     }
     
     public synchronized boolean deleteTerminalButton(TerminalButton button){        
@@ -265,30 +267,33 @@ public class EQueue implements Serializable{
     }
     
     public synchronized EQueueUser getUser(EQueueUser user){
-        int i = users.indexOf(user);
+        return users.stream().filter(user::equals).findAny().orElse(null);
+        /*int i = users.indexOf(user);
         if(i != -1)
             return users.get(i);
         else
-            return null;
+            return null;*/
     }
     
     public synchronized EQueueUser findUserById(long userId){
+        return users.stream().filter(s -> s.getUserId() == userId).findAny().orElse(null);
         //return EQueueDB.findUserById(userId);
-        for(EQueueUser user : users){
+        /*for(EQueueUser user : users){
             if(user.getUserId() == userId){
                 return user;
             }           
         }
-        return null;
+        return null;*/
     }
     
-    public synchronized EQueueUser getUserByIdAndRole(long userId, UserRole userRole){        
-        for(EQueueUser user : users){
+    public synchronized EQueueUser getUserByIdAndRole(long userId, UserRole userRole){
+        return users.stream().filter(s -> s.getUserId() == userId && s.getUserRole() == userRole).findAny().orElse(null);
+        /*for(EQueueUser user : users){
             if(user.getUserId() == userId && user.getUserRole() == userRole){
                 return user;
             }           
         }
-        return null;
+        return null;*/
     }
     
     public synchronized EQueueUser getUserByLogin(String login){
@@ -301,15 +306,15 @@ public class EQueue implements Serializable{
     }
     
     public synchronized boolean deleteUser(long userId){
-        //EQueueDB.deleteUser(EQueueDB.findUserById(userId));
-        boolean isDelete = false;
+        return users.removeIf(s -> s.getUserId() == userId);
+        /*boolean isDelete = false;
         for(EQueueUser user : users){
             if(user.getUserId() == userId){
                 isDelete = users.remove(user);
                 break;
             }           
         }
-        return isDelete;
+        return isDelete;*/
     }    
     
     public synchronized UserRole[] getUserRoles(){
