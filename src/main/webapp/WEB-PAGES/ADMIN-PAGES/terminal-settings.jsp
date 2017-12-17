@@ -81,6 +81,27 @@
                         return true;
                     }
                 }
+                
+                function checkName(o, n){
+                    var isUnique;
+                    $.ajax({
+                        url: "admin",
+                        type: "POST",
+                        data: {action: "check-button-name", buttonName: o.val()},
+                        success: function(data){
+                            if($.trim(data) === 'false'){
+                            o.addClass( "ui-state-error" );
+                            updateTips( n );
+                            isUnique = false;
+                        } else{
+                            isUnique = true;
+                        }
+                        },
+                        dataType: "text",
+                        async: false
+                    });
+                    return isUnique;
+                }
 
                 function addButton() {                    
                     var valid = true;
@@ -92,6 +113,7 @@
                     valid = valid && checkStatus( status, "Выберите статус кнопки");
                     
                     valid = valid && checkRegexp( name, /^([a-zA-Zа-яА-Я])([0-9a-zA-Zа-яА-Я_])+$/,"Название должно начинаться с буквы и может состоять из латинских букв, цифр и нижнего подчеркивания");
+                    valid = valid && checkName( name, "Кнопка с таким именем уже существует");    
                     valid = valid && checkRegexp( prefix, /^([a-zA-Zа-яА-Я])+$/i, "Префикс талона должен состоять только из букв и начинаться с заглавной буквы" );            
                     valid = valid && checkRegexp( numTickets, /^([0-9])+$/i, "Количество талонов должно состоять только из цифр" );
 
@@ -139,27 +161,6 @@
         <title>Настройки терминала</title>
     </head>
     <body>
-        <div id="dialog-form" title="Добавить новую кнопку">
-            <p class="validateTips">Все поля обязательны.</p> 
-            <form action="admin" method="post">
-                <fieldset>
-                    <label for="name">Название</label>
-                    <input type="text" name="name" id="name" placeholder="Введите название кнопки" class="text ui-widget-content ui-corner-all">
-                    <label for="prefix">Префикс</label>
-                    <input type="text" name="prefix" id="prefix" placeholder="Введите префикс для талона" class="text ui-widget-content ui-corner-all">
-                    <label for="numTickets">Количество талонов</label>
-                    <input type="text" name="numTickets" id="numTickets" placeholder="Введите количество талонов" class="text ui-widget-content ui-corner-all">
-                    <label for="status">Статус кнопки</label>
-                    <select name="status" id="status">
-                        <option disabled selected="selected">Выберите статус</option>
-                        <option value="true">Активна</option>
-                        <option value="false">Неактивна</option>
-                    </select>                    
-                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
-                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-                </fieldset>
-             </form>
-        </div> 
         <div class="main-inner"></div>
         <div class="footer-inner">
             <div class="footer-button">
@@ -168,3 +169,24 @@
         </div>
     </body>
 </html>
+<div id="dialog-form" title="Добавить новую кнопку">
+    <p class="validateTips">Все поля обязательны.</p> 
+    <form action="admin" method="post">
+        <fieldset>
+            <label for="name">Название</label>
+            <input type="text" name="name" id="name" placeholder="Введите название кнопки" class="text ui-widget-content ui-corner-all">
+            <label for="prefix">Префикс</label>
+            <input type="text" name="prefix" id="prefix" placeholder="Введите префикс для талона" class="text ui-widget-content ui-corner-all">
+            <label for="numTickets">Количество талонов</label>
+            <input type="text" name="numTickets" id="numTickets" placeholder="Введите количество талонов" class="text ui-widget-content ui-corner-all">
+            <label for="status">Статус кнопки</label>
+            <select name="status" id="status">
+                <option disabled selected="selected">Выберите статус</option>
+                <option value="true">Активна</option>
+                <option value="false">Неактивна</option>
+            </select>                    
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div> 

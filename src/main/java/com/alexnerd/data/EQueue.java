@@ -19,8 +19,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.alexnerd.data.users.EQueueUser;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -132,8 +130,6 @@ public class EQueue implements Serializable{
     public synchronized void setCompanyName(String companyName){
         this.companyName = companyName;
     }
-    
-    
     // Working with Request Log block
     
     public boolean addLogEntry(RequestLog log){
@@ -160,7 +156,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized TerminalButton getTerminalButton(TerminalButton button){
-        return terminalButtons.stream().filter(button::equals).findAny().orElse(null);
+        return terminalButtons.parallelStream().filter(button::equals).findAny().orElse(null);
         /*int i = terminalButtons.indexOf(button);
         if(i != -1)
             return terminalButtons.get(i);
@@ -173,7 +169,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized TerminalButton getTerminalButtonById(long buttonId){
-        return terminalButtons.stream().filter(s -> s.getButtonId() == buttonId).findFirst().orElse(null);
+        return terminalButtons.parallelStream().filter(s -> s.getButtonId() == buttonId).findAny().orElse(null);
         /*
         System.out.println("****************************************** button " + b.getName() + b.getButtonId());
         for(TerminalButton button : terminalButtons){
@@ -199,6 +195,10 @@ public class EQueue implements Serializable{
     
     public synchronized boolean deleteTerminalButton(TerminalButton button){        
         return terminalButtons.remove(button);
+    }
+    
+    public synchronized boolean isUniqueTerminalButtonName(String name){
+        return terminalButtons.parallelStream().map(s -> s.getName()).noneMatch(name::equals);
     }
     
     //End block
@@ -267,7 +267,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized EQueueUser getUser(EQueueUser user){
-        return users.stream().filter(user::equals).findAny().orElse(null);
+        return users.parallelStream().filter(user::equals).findAny().orElse(null);
         /*int i = users.indexOf(user);
         if(i != -1)
             return users.get(i);
@@ -276,7 +276,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized EQueueUser findUserById(long userId){
-        return users.stream().filter(s -> s.getUserId() == userId).findAny().orElse(null);
+        return users.parallelStream().filter(s -> s.getUserId() == userId).findAny().orElse(null);
         //return EQueueDB.findUserById(userId);
         /*for(EQueueUser user : users){
             if(user.getUserId() == userId){
@@ -287,7 +287,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized EQueueUser getUserByIdAndRole(long userId, UserRole userRole){
-        return users.stream().filter(s -> s.getUserId() == userId && s.getUserRole() == userRole).findAny().orElse(null);
+        return users.parallelStream().filter(s -> s.getUserId() == userId && s.getUserRole() == userRole).findAny().orElse(null);
         /*for(EQueueUser user : users){
             if(user.getUserId() == userId && user.getUserRole() == userRole){
                 return user;
@@ -297,7 +297,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized EQueueUser getUserByLogin(String login){
-        return users.stream().filter(s -> s.getLogin().equals(login)).findFirst().orElse(null);
+        return users.parallelStream().filter(s -> s.getLogin().equals(login)).findFirst().orElse(null);
     }
     
     public synchronized boolean deleteUser(EQueueUser user){
@@ -322,7 +322,7 @@ public class EQueue implements Serializable{
     }
     
     public synchronized boolean isUniqueLogin(String login){
-        return users.stream().map(s -> s.getLogin()).noneMatch(login::equals);
+        return users.parallelStream().map(s -> s.getLogin()).noneMatch(login::equals);
     }
     
     //End block

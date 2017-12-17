@@ -151,6 +151,12 @@ public class AdminServlet extends HttpServlet {
                     out.flush();
                 }
             }
+            if(action.equals("check-button-name")){
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(EQueueDB.isUniqueTerminalButtonName(request.getParameter("buttonName")));
+                    out.flush();
+                }
+            }
             if(action.equals("save-properties")){
                 EQueueDB.setCompanyName(request.getParameter("companyName"));
                 Properties props = new Properties();

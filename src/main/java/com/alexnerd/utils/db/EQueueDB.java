@@ -392,6 +392,16 @@ public class EQueueDB {
         //return check;
     }
     
+     public static boolean isUniqueTerminalButtonName(String name){
+        EntityManager em = emf.createEntityManager();
+        EQueueService equeueService = new EQueueService(em);
+        EQueue equeue = equeueService.createEQueue();
+        boolean unique = equeue.isUniqueTerminalButtonName(name);
+        System.out.println("************************** EQueueDB isUniqueTerminalButtonName " + unique);
+        em.close();
+        return unique;
+    }
+    
     public static Ticket getFirstTicket(){
         Ticket ticket = null;
         EntityManager em = emf.createEntityManager();
